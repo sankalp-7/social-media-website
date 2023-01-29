@@ -15,6 +15,11 @@
     <link rel="stylesheet" href="{% static 'assets/css/uikit.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/tailwind.css' %}">
+    <style>
+      body{
+        background-color: white !important;
+      }
+    </style>
 </head>
 
 <body>
@@ -171,7 +176,7 @@
                         </a>
                         <div uk-drop="mode: click;offset:9" class="header_dropdown profile_dropdown border-t">
                             <ul>
-                                <li><a href="setting.html"> Account setting </a> </li>
+                                <li><a href="/settings"> Account setting </a> </li>
                                 <li><a href="explore.html">explore </a> </li>
                                 <li><a href="#"> Help </a> </li>
                                 <li><a href="{% url 'djinsta:logout' %}"> Log Out</a></li>

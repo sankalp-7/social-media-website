@@ -12,7 +12,7 @@
 ===============*/
 html,body{
 	font-family: calibri;
-    background: #fff;
+    background: rgb(218, 68, 68)!important;
 }
 
 .bio{
@@ -25,8 +25,8 @@ body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    color: #545454;
-    background: #b0b3b8;
+    color: #ffffff;
+    background: #ffffff;
 }
 
 p {
@@ -254,7 +254,7 @@ section {
 .gray-bg {
     float: left;
     width: 100%;
-    background: #b0b3b8;
+    background: #ffffff;
 }
 
 [type="submit"],
@@ -771,7 +771,7 @@ header.sticky {
 }
 
 .timeline-info {
-    background: ##b0b3b8 none repeat scroll 0 0;
+    background: #b0b3b8 none repeat scroll 0 0;
     display: block;
     line-height: 59px;
     width: 100%;
