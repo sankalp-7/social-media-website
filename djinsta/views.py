@@ -3,12 +3,13 @@ from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from.models import Profile
+from post.models import Follow
 # Create your views here.
 
 @login_required(login_url='/signin')
 def home(request):
-    
-    return render(request,'djinsta/index.html')
+    users=Profile.objects.all().exclude(user=request.user)
+    return render(request,'djinsta/index.html',{'users':users})
 
 def signup(request):
     if request.method=='POST':
@@ -94,3 +95,12 @@ def settings(request):
 def profile(request):
     curr_user=Profile.objects.get(user=request.user)
     return render(request,'djinsta/profile.html',{'curr_user':curr_user})
+
+def follow(request,pk):
+    follower=request.user
+    following=Profile.objects.get(id_user=pk)
+    follow_obj=Follow.objects.create(follower=follower,following=following.user)
+    follow_obj.save()
+    return redirect('/')
+
+    
