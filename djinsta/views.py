@@ -7,6 +7,7 @@ from.models import Profile
 
 @login_required(login_url='/signin')
 def home(request):
+    
     return render(request,'djinsta/index.html')
 
 def signup(request):
@@ -57,9 +58,11 @@ def logout(request):
     return redirect('/signin')
 @login_required(login_url='/signin')
 def settings(request):
+    print("settings loading/......")
     curr_user=Profile.objects.get(user=request.user)
     if request.method=='POST':
-        if request.FILES.get('image')==None:
+        if request.FILES['image']==None:
+            print("default image loaded")
             curr_user.profile_img=curr_user.profile_img
             curr_user.bio=request.POST['bio']
             curr_user.location=request.POST['location']
@@ -70,7 +73,9 @@ def settings(request):
                 curr_user.account_visibility=True 
             curr_user.save()
         else:
-            curr_user.profile_img=request.FILES.get('image')
+            print("personal image dp")
+            curr_user.profile_img=request.FILES['image']
+            print(curr_user.profile_img)
             curr_user.bio=request.POST['bio']
             curr_user.location=request.POST['location']
             bool=request.POST['checkprivacy']
@@ -84,3 +89,8 @@ def settings(request):
 
 
         return render(request,'djinsta/setting.html',{'user_profile':curr_user})
+    
+
+def profile(request):
+    curr_user=Profile.objects.get(user=request.user)
+    return render(request,'djinsta/profile.html',{'curr_user':curr_user})

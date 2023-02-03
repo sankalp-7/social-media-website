@@ -40,7 +40,7 @@
                         <p></p>
                     </div>
                     <div class="bg-white rounded-md lg:shadow-lg shadow col-span-2">
-                    <form action="" method="post">
+                    <form action="" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                        <div class="grid grid-cols-2 gap-3 lg:p-6 p-4">
                        
@@ -76,12 +76,13 @@
                             
                               </select>
                             </div>
+                            <div class="bg-gray-10 p-6 pt-0 flex justify-end space-x-3">
+                                <button class="p-2 px-4 rounded bg-gray-50 text-red-500"> Cancel </button>
+                                <button type="submit" class="button bg-blue-700"> Save </button>
+                            </div>
                        </div> 
     
-                       <div class="bg-gray-10 p-6 pt-0 flex justify-end space-x-3">
-                           <button class="p-2 px-4 rounded bg-gray-50 text-red-500"> Cancel </button>
-                           <button type="submit" class="button bg-blue-700"> Save </button>
-                       </div>
+                      
     
                     </div>
                     </form>
