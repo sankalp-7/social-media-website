@@ -9,7 +9,13 @@ from post.models import Follow
 @login_required(login_url='/signin')
 def home(request):
     users=Profile.objects.all().exclude(user=request.user)
-    return render(request,'djinsta/index.html',{'users':users})
+    check_follow_status=Follow.objects.filter(follower=request.user)
+    following_list=[]
+    for accounts in check_follow_status:
+        following_list.append(accounts.following.username)
+    print(following_list)
+
+    return render(request,'djinsta/index.html',{'users':users,'following_list':following_list})
 
 def signup(request):
     if request.method=='POST':
@@ -69,9 +75,9 @@ def settings(request):
             curr_user.location=request.POST['location']
             bool=request.POST['checkprivacy']
             if bool=="0":
-                curr_user.account_visibility=False 
+                curr_user.account_visibility=False
             else:
-                curr_user.account_visibility=True 
+                curr_user.account_visibility=True
             curr_user.save()
         else:
             print("personal image dp")
@@ -81,16 +87,16 @@ def settings(request):
             curr_user.location=request.POST['location']
             bool=request.POST['checkprivacy']
             if bool=="0":
-                curr_user.account_visibility=False 
+                curr_user.account_visibility=False
             else:
-                curr_user.account_visibility=True 
+                curr_user.account_visibility=True
             curr_user.save()
         return redirect('/')
     else:
 
 
         return render(request,'djinsta/setting.html',{'user_profile':curr_user})
-    
+
 
 def profile(request):
     curr_user=Profile.objects.get(user=request.user)
@@ -99,8 +105,22 @@ def profile(request):
 def follow(request,pk):
     follower=request.user
     following=Profile.objects.get(id_user=pk)
+    following.followers+=1
+    following.save()
+    print(following.user,following.followers)
     follow_obj=Follow.objects.create(follower=follower,following=following.user)
     follow_obj.save()
     return redirect('/')
+def unfollow(request,pk):
+    follower=request.user
+    following=Profile.objects.get(id_user=pk)
 
-    
+    if following.followers==0:
+        following.followers=0
+    else:
+        following.followers-=1
+    following.save()
+
+    inst=Follow.objects.get(follower=follower,following=following.user)
+    inst.delete()
+    return redirect('/')
