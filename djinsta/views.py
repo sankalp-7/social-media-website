@@ -137,5 +137,5 @@ def like_post(request,pid):
     post_obj._meta.auto_created = False
     sender = Profile.objects.get(user=request.user)
     receiver = post_obj.user
-    notify.send(sender, recipient=receiver, verb='Message', description='liked your post')
+    notify.send(sender, recipient=receiver, verb='notification', description='liked your post')
     return redirect('/')
