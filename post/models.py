@@ -20,7 +20,7 @@ class Tag(models.Model):
 
 	def get_absolute_url(self):
 		return reverse('tags', args=[self.slug])
-		
+
 	def __str__(self):
 		return self.title
 
@@ -44,7 +44,7 @@ class Post(models.Model):
 
 	def __str__(self):
 		return str(self.id)
-	
+
 
 class Follow(models.Model):
 	follower = models.ForeignKey(User,on_delete=models.CASCADE, null=True, related_name='follower')
@@ -55,7 +55,7 @@ class Request(models.Model):
 
 class Stream(models.Model):
     following = models.ForeignKey(User, on_delete=models.CASCADE,null=True, related_name='stream_following')
-    user = models.ForeignKey(User, on_delete=models.CASCADE)   
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
     date = models.DateTimeField()
 
@@ -66,12 +66,10 @@ class Stream(models.Model):
         for follower in followers:
             stream=Stream.objects.create(post=post,user=follower.follower,following=user,date=post.posted)
             stream.save()
-	    
-        
 post_save.connect(Stream.add_post, sender=Post)
 
-		
-	    
 
-	
-	
+
+
+
+

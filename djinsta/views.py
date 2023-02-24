@@ -3,19 +3,19 @@ from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from.models import Profile
-from post.models import Follow
+from post.models import Follow,Stream
 # Create your views here.
 
 @login_required(login_url='/signin')
 def home(request):
+    posts=Stream.objects.filter(user=request.user)
     users=Profile.objects.all().exclude(user=request.user)
+    user_profile_img=Profile.objects.get(user=request.user)
     check_follow_status=Follow.objects.filter(follower=request.user)
     following_list=[]
     for accounts in check_follow_status:
         following_list.append(accounts.following.username)
-    print(following_list)
-
-    return render(request,'djinsta/index.html',{'users':users,'following_list':following_list})
+    return render(request,'djinsta/index.html',{'users':users,'following_list':following_list,'posts':posts,'dp':user_profile_img})
 
 def signup(request):
     if request.method=='POST':
@@ -97,11 +97,11 @@ def settings(request):
 
         return render(request,'djinsta/setting.html',{'user_profile':curr_user})
 
-
+@login_required(login_url='/signin')
 def profile(request):
     curr_user=Profile.objects.get(user=request.user)
     return render(request,'djinsta/profile.html',{'curr_user':curr_user})
-
+@login_required(login_url='/signin')
 def follow(request,pk):
     follower=request.user
     following=Profile.objects.get(id_user=pk)
@@ -111,6 +111,7 @@ def follow(request,pk):
     follow_obj=Follow.objects.create(follower=follower,following=following.user)
     follow_obj.save()
     return redirect('/')
+@login_required(login_url='/signin')
 def unfollow(request,pk):
     follower=request.user
     following=Profile.objects.get(id_user=pk)
@@ -124,3 +125,5 @@ def unfollow(request,pk):
     inst=Follow.objects.get(follower=follower,following=following.user)
     inst.delete()
     return redirect('/')
+def like_post(request,pid):
+    pass
