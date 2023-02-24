@@ -16,10 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
+import notifications.urls
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('',include('djinsta.urls')),
+    path('^inbox/notifications/', include(notifications.urls, namespace='notifications')),
     path('admin/', admin.site.urls),
 ]
 urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

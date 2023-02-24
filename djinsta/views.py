@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from notifications.signals import notify
 from.models import Profile
 from post.models import Follow,Stream,Post
 # Create your views here.
@@ -134,4 +135,7 @@ def like_post(request,pid):
     post_obj._meta.auto_created = True
     post_obj.save()
     post_obj._meta.auto_created = False
+    sender = Profile.objects.get(user=request.user)
+    receiver = post_obj.user
+    notify.send(sender, recipient=receiver, verb='Message', description='liked your post')
     return redirect('/')
