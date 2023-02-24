@@ -3,14 +3,17 @@ from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from.models import Profile
-from post.models import Follow,Stream
+from post.models import Follow,Stream,Post
 # Create your views here.
 
 @login_required(login_url='/signin')
 def home(request):
     posts=Stream.objects.filter(user=request.user)
     users=Profile.objects.all().exclude(user=request.user)
-    user_profile_img=Profile.objects.get(user=request.user)
+    try:
+        user_profile_img=Profile.objects.get(user=request.user)
+    except:
+        user_profile_img='default.png'
     check_follow_status=Follow.objects.filter(follower=request.user)
     following_list=[]
     for accounts in check_follow_status:
@@ -126,4 +129,9 @@ def unfollow(request,pk):
     inst.delete()
     return redirect('/')
 def like_post(request,pid):
-    pass
+    post_obj=Post.objects.get(id=pid)
+    post_obj.likes+=1
+    post_obj._meta.auto_created = True
+    post_obj.save()
+    post_obj._meta.auto_created = False
+    return redirect('/')

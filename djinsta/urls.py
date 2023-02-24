@@ -10,5 +10,6 @@ urlpatterns=[
     path('settings/',settings,name='settings'),
     path('profile/',profile,name='profile'),
     path('follow/<int:pk>',follow,name='follow'),
-    path('unfollow/<int:pk>',unfollow,name='unfollow')
+    path('unfollow/<int:pk>',unfollow,name='unfollow'),
+    path('like/<str:pid>',like_post,name='likepost')
 ]
