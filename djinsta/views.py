@@ -9,6 +9,13 @@ from post.models import Follow,Stream,Post
 
 @login_required(login_url='/signin')
 def home(request):
+    if request.method=='POST' and request.FILES:
+        print("coming???????????????????")
+        user_post=request.FILES['user_post']
+        caption=request.POST['caption']
+        obj=Post.objects.create(picture=user_post,caption=caption,user=request.user)
+        obj.save()
+        print(obj)
     posts=Stream.objects.filter(user=request.user)
     users=Profile.objects.all().exclude(user=request.user)
     try:
@@ -111,7 +118,7 @@ def follow(request,pk):
     following=Profile.objects.get(id_user=pk)
     following.followers+=1
     following.save()
-    print(following.user,following.followers)
+    notify.send(follower, recipient=following.user, verb='Follow Notification', description='followed you')
     follow_obj=Follow.objects.create(follower=follower,following=following.user)
     follow_obj.save()
     return redirect('/')
@@ -137,5 +144,5 @@ def like_post(request,pid):
     post_obj._meta.auto_created = False
     sender = Profile.objects.get(user=request.user)
     receiver = post_obj.user
-    notify.send(sender, recipient=receiver, verb='notification', description='liked your post')
+    notify.send(sender, recipient=receiver, verb='Like Notification', description='liked your post')
     return redirect('/')

@@ -4,6 +4,7 @@ from django.db.models.signals import post_save, post_delete
 from django.utils.text import slugify
 from django.urls import reverse
 import uuid
+from djinsta.models import Profile
 
 # Create your models here.
 
@@ -34,7 +35,7 @@ class Post(models.Model):
 	picture=models.ImageField(upload_to=get_profile_url,verbose_name='Picture',null=True)
 	caption = models.TextField(max_length=1500, verbose_name='Caption')
 	posted = models.DateTimeField(auto_now_add=True)
-	tags = models.ManyToManyField(Tag, related_name='tags')
+	tags = models.ManyToManyField(Tag, related_name='tags',null=True)
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	likes = models.IntegerField(default=0)
 
@@ -51,13 +52,15 @@ class Follow(models.Model):
 	following = models.ForeignKey(User,on_delete=models.CASCADE, null=True, related_name='following')
 
 class Request(models.Model):
-	pass
+    pass
+
 
 class Stream(models.Model):
     following = models.ForeignKey(User, on_delete=models.CASCADE,null=True, related_name='stream_following')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
     date = models.DateTimeField()
+    profile=models.ForeignKey(Profile,on_delete=models.CASCADE, null=True)
 
     def add_post(sender,instance,*args,**kwargs):
         post=instance
@@ -67,6 +70,8 @@ class Stream(models.Model):
             stream=Stream.objects.create(post=post,user=follower.follower,following=user,date=post.posted)
             stream.save()
 post_save.connect(Stream.add_post, sender=Post)
+# post_save.connect(Stream.add_post, sender=Follow)
+
 
 
 

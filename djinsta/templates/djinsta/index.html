@@ -31,7 +31,7 @@
     min-width: 6px;
     height: 11px;
     padding: -37px 1px 1pc 10px;
-    border: 10px solid aqua;
+    border: 10px solid rgb(255, 185, 185);
     border-radius: 160px;
     font-size: 14px;
     font-weight: 600;
@@ -40,6 +40,18 @@
     transition: transform 0.15s, background-color 0.5s;
 
       }
+      .trns-text {
+  font-size: 4rem;
+  margin: 0;
+  padding: 3px;
+  -webkit-text-stroke: 1px black;
+  color: #ffdddd;
+  text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000,
+    -1px 1px 0 #000, 1px 1px 0 #000;
+}
+      .uk-form-custom select, .uk-form-custom input[type="file"] {
+            height:20%;
+              }
     </style>
 </head>
 
@@ -97,12 +109,24 @@
                                             <path d="M9 13h2v5a1 1 0 11-2 0v-5z" />
                                         </svg>
                                     </div>
+                                    <br>
 
-                                    <p class="my-3 leading-6"> Upload pics or videos <br> please upload her ..
-                                    </p>
+
+
                                     <div uk-form-custom>
-                                        <input type="file">
-                                        <a href="#" class="button soft-warning small"> Choose file</a>
+                                        <form method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <p class="button soft-warning smal" style="color:white;background-color:#be185d;">Upload File</p>
+                                            <input type="file" name="user_post">
+<!--                                            <a href="#" class="button soft-warning small"> Choose file</a>-->
+
+                                             <hr>
+
+                                             <input type="text" placeholder="Enter Caption" name="caption">
+                                              <br>
+                                             <input type="submit" value="Submit" class="button soft-warning smal">
+                                        </form>
+
                                     </div>
 
                                     <a href="#" class="uk-text-muted mt-3 uk-link"
@@ -141,7 +165,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none"><path d="M12 22a2.02 2.02 0 0 1-2.01-2h4a2.02 2.02 0 0 1-.15.78a2.042 2.042 0 0 1-1.44 1.18h-.047A1.922 1.922 0 0 1 12 22zm8-3H4v-2l2-1v-5.5a8.065 8.065 0 0 1 .924-4.06A4.654 4.654 0 0 1 10 4.18V2h4v2.18c2.579.614 4 2.858 4 6.32V16l2 1v2z" fill="currentColor"/></g></svg>
                         </a>
 <span class='live_notify_badge'>
-                            
+
                 </span>
 
 
@@ -155,13 +179,13 @@
                             {% for notification in  user.notifications.unread %}
                                 <li>
                                     <a href="#">
-                                        <div class="drop_avatar"> <img src="{% static 'assets/images/avatars/avatar-1.jpg' %}" alt="">
+                                        <div class="drop_avatar"> <img src="{{ notification.actor.profile_img.url }}" alt="">
                                         </div>
                                         <div class="drop_content">
                                             <p> <strong class="text-link" >{{ notification.actor }}</strong>
                                                 <span class="text-link"> {{ notification.description }} </span>
                                             </p>
-                                            <span class="time-ago"> 2 hours ago </span>
+                                            <span class="time-ago"> {{notification.timesince}} ago </span>
                                         </div>
                                     </a>
                                 </li>
@@ -225,7 +249,7 @@
 
                     <!-- left sidebar-->
                     <div class="space-y-5 flex-shrink-0 lg:w-7/12">
-
+                    {% if posts %}
                     {% for post in posts %}
                         <!-- post 1-->
                         <div class="bg-white shadow rounded-md  -mx-2 lg:mx-0">
@@ -235,7 +259,9 @@
                                 <div class="flex flex-1 items-center space-x-4">
                                     <a href="#">
                                         <div class="bg-gradient-to-tr from-yellow-600 to-pink-600 p-0.5 rounded-full">
-                                            <img src="{{dp.profile_img.url}}" class="bg-gray-200 border border-white rounded-full w-8 h-8">
+
+                                            <img src="{{post.following.profile_img.url}}" class="bg-gray-200 border border-white rounded-full w-8 h-8">
+
                                         </div>
                                     </a>
                                     <span class="block capitalize font-semibold "> {{post.post.user}} </span>
@@ -358,6 +384,9 @@
 
                         </div>
                     {% endfor %}
+                    {% else %}
+                    <p class="trns-text">Follow Others To View Their Posts!</p>
+                    {% endif %}
 
                         <!-- post 2-->
 
