@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect
+from django.http import JsonResponse
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -10,7 +11,6 @@ from post.models import Follow,Stream,Post
 @login_required(login_url='/signin')
 def home(request):
     if request.method=='POST' and request.FILES:
-        print("coming???????????????????")
         user_post=request.FILES['user_post']
         caption=request.POST['caption']
         obj=Post.objects.create(picture=user_post,caption=caption,user=request.user)
@@ -146,3 +146,13 @@ def like_post(request,pid):
     receiver = post_obj.user
     notify.send(sender, recipient=receiver, verb='Like Notification', description='liked your post')
     return redirect('/')
+def profile(request,pk):
+    user=Profile.objects.get(id_user=pk)
+    posts=Post.objects.filter(user=user.user)
+    return render(request,'djinsta/profile.html',{'user':user,'photos':posts})
+def delete_notification(request,pk):
+    user=Profile.objects.get(id_user=pk)
+    recipient=user.user
+    data = {'result': 'success'}
+    return JsonResponse(data)
+

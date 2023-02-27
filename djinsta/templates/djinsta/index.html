@@ -182,13 +182,17 @@
                                         <div class="drop_avatar"> <img src="{{ notification.actor.profile_img.url }}" alt="">
                                         </div>
                                         <div class="drop_content">
-                                            <p> <strong class="text-link" >{{ notification.actor }}</strong>
+                                             <strong class="text-link" >{{ notification.actor }}</strong>
                                                 <span class="text-link"> {{ notification.description }} </span>
-                                            </p>
+                                                <span>{{notification.recipient}}</span>
+                                                <p id="result"></p>
+
                                             <span class="time-ago"> {{notification.timesince}} ago </span>
                                         </div>
                                     </a>
                                 </li>
+              <button class="btn" id="notification_btn" onclick="callMyView('{{notification.recipient.id}}')">Delete All Notifications</button>
+
                               {% endfor %}
 
 
@@ -260,7 +264,7 @@
                                     <a href="#">
                                         <div class="bg-gradient-to-tr from-yellow-600 to-pink-600 p-0.5 rounded-full">
 
-                                            <img src="{{post.following.profile_img.url}}" class="bg-gray-200 border border-white rounded-full w-8 h-8">
+                                            <img src="{{post.post.user.profile_img.url}}" class="bg-gray-200 border border-white rounded-full w-8 h-8">
 
                                         </div>
                                     </a>
@@ -306,7 +310,7 @@
                             </div>
 
                             <div uk-lightbox>
-                                <a href="{% static 'assets/images/post/img4.jpg' %}">
+                                <a href="media/{{post.post.picture.name}}">
                                     <img src="{{post.post.picture.url}}" alt="">
                                 </a>
                             </div>
@@ -817,24 +821,36 @@
                                 {% for i in users %}
                                 <div class="flex items-center justify-between py-3">
                                     <div class="flex flex-1 items-center space-x-4">
-                                        <a href="profile.html">
+                                        <a href="profile/{{i.id_user}}">
                                             <img src="{{i.profile_img.url}}" class="bg-gray-200 rounded-full w-10 h-10">
                                         </a>
                                         <div class="flex flex-col">
-                                            <span class="block capitalize font-semibold"> {{i.user.username}} </span>
+                                            <a href="profile/{{i.id_user}}" style="color:grey;">
+                                                    <span class="block capitalize font-semibold"> {{i.user.username}} </span>
+
+                                            </a>
+
                                             <span class="block capitalize text-sm"> {{i.followers}} followers </span>
 
                                         </div>
                                     </div>
-                                        {% if i.user.username in following_list %}
-                                           <a href="unfollow/{{i.id_user}}" class="border border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600 "> Unfollow </a>
+<!--                                            {% if i.user.username in following_list %}-->
+<!--                                          <a href="unfollow/{{i.id_user}}" class="border border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600 "> Unfollow </a>-->
+
+<!--                                            {% else %}-->
 
 
-                                         {% else %}
+<!--                                         <a href="follow/{{i.id_user}}" class="border border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600 "> Follow </a>-->
+<!--                                            {% endif %}-->
 
-                                        <a href="follow/{{i.id_user}}" class="border border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600 "> Follow </a>
+{% if i.user.username in following_list %}
+   <a href="unfollow/{{i.id_user}}" id="unfollow-btn-{{i.id_user}}" class="border border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600 "> Unfollow </a>
+{% else %}
+    <a href="follow/{{i.id_user}}" id="follow-btn-{{i.id_user}}" class="border border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600 "> Follow </a>
+{% endif %}
 
-                                        {% endif %}
+
+
 
 
                                 </div>
@@ -876,6 +892,49 @@
     <script src="{% static '../../unpkg.com/ionicons%405.2.3/dist/ionicons.js' %}"></script>
     <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
 {% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge' %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+   function callMyView(buttonData) {
+       $.ajax({
+           url: "deleteN/"+ buttonData,
+           type: "GET",
+           success: function(response) {
+               $('#result').text(response.result);
+           }
+       });
+   }
+//    document.addEventListener('DOMContentLoaded', function() {
+//        const buttons = document.querySelectorAll('[id^="follow-btn-"], [id^="unfollow-btn-"]');
+//        buttons.forEach(button => {
+//            button.addEventListener('click', event => {
+//                event.preventDefault();
+//                const url = button.getAttribute('href');
+//                fetch(url, { method: 'GET' })
+//                    .then(response => response.json())
+//                .then(data => {
+//                    console.log(data)
+//                    if (data.is_following) {
+//                        button.textContent = 'Follow';
+//                        console.log(button.textContent)
+//                        button.setAttribute('href', 'follow/' + data.id_user);
+//                        console.log(button.getAttribute('href'))
+//                    } else {
+//                        button.textContent = 'Unfollow';
+//                        console.log(button.textContent)
+//                        button.setAttribute('href', 'unfollow/' + data.id_user);
+//                        console.log(button.getAttribute('href'))
+//
+//                    }
+//                })
+//                    .catch(error => {
+//                        console.error('Error:', error);
+//                    });
+//            });
+//        });
+//    });
+</script>
+
+
 </body>
 
 

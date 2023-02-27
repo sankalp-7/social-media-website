@@ -27,6 +27,7 @@ SECRET_KEY = 'django-insecure-yw_t4h8t8jo=r*oty4c6(-nigq!@w9--yu_g%en(l_xt12isdi
 DEBUG = True
 
 ALLOWED_HOSTS = []
+NOTIFICATIONS_SOFT_DELETE=True
 
 
 # Application definition

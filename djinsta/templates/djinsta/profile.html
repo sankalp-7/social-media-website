@@ -9,9 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="" />
     <meta name="keywords" content="" />
-	<title>Profile - {{user.username}}</title>
+	<title>Profile - {{user.user.username}}</title>
    <!-- <link rel="icon" href="images/fav.png" type="image/png" sizes="16x16"> -->
-    
+
     <link rel="stylesheet" href="{% static 'css/main.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/color.css' %}">
@@ -23,28 +23,30 @@
 		.timeline-info{
 			background: #ffffff none repeat scroll 0 0 !important;
 		}
-		
+
       </style>
 </head>
 <body>
 <!--<div class="se-pre-con"></div>-->
 <div class="theme-layout">
-	
+
 	</div>
-	
+
 	<section>
 			<div class="feature-photo">
 				<figure><img src="{% static 'images/resources/timeline-1.jpg' %}" alt=""></figure>
-				<form>
+
+
 					<div class="add-btn">
 					<span style="color: white; font-size: 27px; margin-right: 520px;"><b><u><a href="/">Home</a></u></b></span>
 					<span style="color: white; font-size: 27px;"><b>11 Post</b></span>
-					<span style="color: white; font-size: 27px;"><b>1.7m followers</b></span>
+					<span style="color: white; font-size: 27px;"><b>{{user.followers}} followers</b></span>
 					<span style="color: white; font-size: 27px;"><b>3.5k following</b></span>
-					<a href="" title="" data-ripple=""><button style="background-color: #ffc0cb; border: #ffc0cb;">Follow</button></a>
-					
+					<a href="follow/{{user.id_user}}" title="" data-ripple=""><button style="background-color: #ffc0cb; border: #ffc0cb;">Follow</button></a>
+
 					</div>
-				</form>
+
+
 
 				<!-- <form class="edit-phto">
 					<i class="fa fa-camera-retro"></i>
@@ -53,12 +55,13 @@
 					<input type="file"/>
 					</label>
 				</form> -->
+
 				<div class="container-fluid">
 					<div class="row merged">
 						<div class="col-lg-2 col-sm-3">
 							<div class="user-avatar">
 								<figure>
-									<img src="{{curr_user.profile_img.url}}" style="height: 250px; width: 100%;" alt="">
+									<img src="{{user.profile_img.url}}" style="height: 250px; width: 100%;" alt="">
 									<form class="edit-phto">
 										<i class="fa fa-camera-retro"></i>
 										<label class="fileContainer">
@@ -68,11 +71,12 @@
 								</figure>
 							</div>
 						</div>
+
 						<div class="col-lg-10 col-sm-9">
 							<div class="timeline-info">
 								<ul>
 									<li class="admin-name">
-									  <h5 style="color: black;white-space: nowrap; width: 110px; font-size: 27px;"><b>{{user.username}}</b><!--<i class="fa fa-check-circle" style="color: #48dbfb;" aria-hidden="true"></i>--></h5>
+									  <!--<i class="fa fa-check-circle" style="color: #48dbfb;" aria-hidden="true"></i>-->
 									  <!--<span>Group Admin</span>-->
 									</li>
 									<!--<li>
@@ -100,10 +104,11 @@
 		</section><!-- top area -->
 		<section>
 			<div class="bio">
-				Bio goes here...
+    <h5 style="color: black;white-space: nowrap; width: 110px; font-size: 27px; text-align:centre;"><b>{{user.user.username}}:</b></h5>{{user.bio}}
+
 			</div>
 		</section>
-		
+
 	<section>
 		<div class="gap gray-bg">
 			<div class="container-fluid">
@@ -112,12 +117,12 @@
 						<div class="row" id="page-contents">
 							<div class="col-lg-3">
 								<aside class="sidebar static">
-									
-									
-									
+
+
+
 								</aside>
 							</div><!-- sidebar -->
-							
+
 
 
 
@@ -130,45 +135,38 @@
 							<div class="col-lg-6">
 								<div class="central-meta">
 									<ul class="photos">
-					
-										<li>
-											<a class="strip" href="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
-												<img src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" style="height: 250px; width: 300px;" alt=""></a>
-										</li>
+                                        {% for photo in photos %}
 
 										<li>
-											<a class="strip" href="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
-												<img src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" style="height: 250px; width: 300px;" alt=""></a>
+											<a class="strip" href="/media/{{photo.picture.name}}" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
+												<img src="{{photo.picture.url}}" style="height: 250px; width: 300px;" alt=""></a>
 										</li>
+                                        {% endfor %}
 
-										<li>
-											<a class="strip" href="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
-												<img src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" style="height: 250px; width: 300px;" alt=""></a>
-										</li>
-										
-										
+
+
 									</ul>
 									<!--<div class="lodmore"><button class="btn-view btn-load-more"></button></div>-->
 								</div><!-- photos -->
 							</div><!-- centerl meta -->
 							<div class="col-lg-3">
 								<aside class="sidebar static">
-									
+
 								</aside>
 							</div><!-- sidebar -->
-						</div>	
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>	
+		</div>
 	</section>
 
-	
-	
+
+
 	<script data-cfasync="false" src="{% static '../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %}"></script><script src="js/main.min.js"></script>
 	<script src="{% static 'js/script.js' %}"></script>
 
-</body>	
+</body>
 
 
 </html>
