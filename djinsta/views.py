@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from notifications.signals import notify
 from.models import Profile
 from post.models import Follow,Stream,Post
+from notifications.models import Notification
 # Create your views here.
 
 @login_required(login_url='/signin')
@@ -151,8 +152,9 @@ def profile(request,pk):
     posts=Post.objects.filter(user=user.user)
     return render(request,'djinsta/profile.html',{'user':user,'photos':posts})
 def delete_notification(request,pk):
-    user=Profile.objects.get(id_user=pk)
-    recipient=user.user
-    data = {'result': 'success'}
-    return JsonResponse(data)
+    user=User.objects.get(pk=pk)
+    qs=Notification.objects.filter(deleted=False).delete()
+    return JsonResponse({'result':'success'})
+
+
 
