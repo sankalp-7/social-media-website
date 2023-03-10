@@ -16,7 +16,29 @@
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/tailwind.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <style>
+    .btn-del {
+    --tw-bg-opacity: 1;
+    background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    --tw-text-opacity: 1;
+    color: rgba(55, 65, 81, var(--tw-text-opacity));
+    background-color: #ee8282;
+    width: 68px;
+    height: 35px;
+     }
+    .btn-del:hover{
+            background-color:#ee5b5b;
+            transition:0.1s;
+            }
       body{
         background-color: white !important;
       }
@@ -52,6 +74,105 @@
       .uk-form-custom select, .uk-form-custom input[type="file"] {
             height:20%;
               }
+
+    #toast {
+    visibility: hidden;
+    max-width: 50px;
+    height: 50px;
+    /*margin-left: -125px;*/
+    margin: auto;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 10px;
+
+    position: fixed;
+    z-index: 1;
+    left: 0;right:0;
+    bottom: 30px;
+    font-size: 17px;
+    white-space: nowrap;
+}
+#toast #img{
+	width: 50px;
+	height: 50px;
+  border-radius: 10px;
+
+    float: left;
+
+    padding-top: 16px;
+    padding-bottom: 16px;
+
+    box-sizing: border-box;
+
+
+    background-color: #111;
+    color: #fff;
+}
+#toast #desc{
+
+
+    color: #fff;
+
+    padding: 16px;
+
+    overflow: hidden;
+	white-space: nowrap;
+}
+
+#toast.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 2s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 4s, fadeout 0.5s 4.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes expand {
+    from {min-width: 50px}
+    to {min-width: 350px}
+}
+
+@keyframes expand {
+    from {min-width: 50px}
+    to {min-width: 350px}
+}
+@-webkit-keyframes stay {
+    from {min-width: 350px}
+    to {min-width: 350px}
+}
+
+@keyframes stay {
+    from {min-width: 350px}
+    to {min-width: 350px}
+}
+@-webkit-keyframes shrink {
+    from {min-width: 350px;}
+    to {min-width: 50px;}
+}
+
+@keyframes shrink {
+    from {min-width: 350px;}
+    to {min-width: 50px;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 60px; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 60px; opacity: 0;}
+}
     </style>
 </head>
 
@@ -185,19 +306,22 @@
                                              <strong class="text-link" >{{ notification.actor }}</strong>
                                                 <span class="text-link"> {{ notification.description }} </span>
                                                 <span>{{notification.recipient}}</span>
-                                                <p id="result"></p>
+
 
                                             <span class="time-ago"> {{notification.timesince}} ago </span>
                                         </div>
                                     </a>
                                 </li>
-              <button class="btn" id="notification_btn" onclick="callMyView('{{notification.recipient.id}}')">Delete All Notifications</button>
 
                               {% endfor %}
+                            {% if user.notifications.unread %}
+                         <button class="btn-del" id="notification_btn" onclick="callMyView('{{user.id}}')"><i class="material-icons">delete</i></button>
+                         {% endif %}
+
+
 
 
                             </ul>
-                            <a href="#" class="see-all">See all</a>
                         </div>
 
                         <!-- Messages -->
@@ -855,6 +979,11 @@
 
                                 </div>
                                 {% endfor %}
+                                <div id="toast">
+  <div id="img">!!</div>
+  <div id="desc"></div>
+</div>
+
 
                             </div>
 
@@ -899,7 +1028,12 @@
            url: "deleteN/"+ buttonData,
            type: "GET",
            success: function(response) {
-               $('#result').text(response.result);
+                   var x = document.getElementById("toast")
+                   x.className = "show";
+                   setTimeout(function(){ x.className = x.className.replace("show", ""); }, 4000);
+                    var msg=document.getElementById("desc")
+                    msg.innerHTML="Notifications Deleted"
+
            }
        });
    }

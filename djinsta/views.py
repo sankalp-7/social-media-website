@@ -15,7 +15,6 @@ def home(request):
         user_post=request.FILES['user_post']
         caption=request.POST['caption']
         obj=Post.objects.create(picture=user_post,caption=caption,user=request.user)
-        obj.save()
         print(obj)
     posts=Stream.objects.filter(user=request.user)
     users=Profile.objects.all().exclude(user=request.user)
@@ -153,7 +152,7 @@ def profile(request,pk):
     return render(request,'djinsta/profile.html',{'user':user,'photos':posts})
 def delete_notification(request,pk):
     user=User.objects.get(pk=pk)
-    qs=Notification.objects.filter(deleted=False).delete()
+    qs=Notification.objects.filter(deleted=False,recipient=user).delete()
     return JsonResponse({'result':'success'})
 
 

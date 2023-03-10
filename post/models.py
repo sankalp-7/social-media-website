@@ -5,6 +5,8 @@ from django.utils.text import slugify
 from django.urls import reverse
 import uuid
 from djinsta.models import Profile
+from notifications.signals import notify
+
 
 # Create your models here.
 
@@ -35,7 +37,6 @@ class Post(models.Model):
 	picture=models.ImageField(upload_to=get_profile_url,verbose_name='Picture',null=True)
 	caption = models.TextField(max_length=1500, verbose_name='Caption')
 	posted = models.DateTimeField(auto_now_add=True)
-	tags = models.ManyToManyField(Tag, related_name='tags',null=True)
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	likes = models.IntegerField(default=0)
 
@@ -69,6 +70,10 @@ class Stream(models.Model):
         for follower in followers:
             stream=Stream.objects.create(post=post,user=follower.follower,following=user,date=post.posted)
             stream.save()
+            notify.send(user, recipient=follower.follower, verb='Post Notification', description='Just Posted!')
+
+
+
 post_save.connect(Stream.add_post, sender=Post)
 # post_save.connect(Stream.add_post, sender=Follow)
 
