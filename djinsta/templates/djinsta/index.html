@@ -1,4 +1,5 @@
 {% load static %}
+{% load helper %}
 {% load notifications_tags %}
 <!DOCTYPE html>
 <html lang="en">
@@ -183,7 +184,7 @@
                     <div class="left-side">
                         <!-- Logo -->
                         <div id="logo" class=" uk-hidden@s">
-                            <a href="home.html">
+                            <a href="/">
                                 <b><h1 style="text-transform: uppercase;">Djinsta</h1></b>
                             </a>
                         </div>
@@ -192,16 +193,16 @@
                             <i class="uil-bars"></i>
                         </div>-->
 
-                        <div class="header_search">
-                            <input type="text" placeholder="Search for username..">
-                            <div class="icon-search">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                </svg>
-                            </div>
-                        </div>
+<!--                        <div class="header_search">-->
+<!--                            <input type="text" placeholder="Search for username..">-->
+<!--                            <div class="icon-search">-->
+<!--                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"-->
+<!--                                    stroke="currentColor">-->
+<!--                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"-->
+<!--                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />-->
+<!--                                </svg>-->
+<!--                            </div>-->
+<!--                        </div>-->
 
                     </div>
                     <div class="right-side lg:pr-4">
@@ -245,7 +246,8 @@
 
                                              <input type="text" placeholder="Enter Caption" name="caption">
                                               <br>
-                                             <input type="submit" value="Submit" class="button soft-warning smal">
+                                             <button class="button soft-warning smal" onclick="submitpost('{{user.id}}')">Submit</button>
+
                                         </form>
 
                                     </div>
@@ -300,12 +302,14 @@
                             {% for notification in  user.notifications.unread %}
                                 <li>
                                     <a href="#">
-                                        <div class="drop_avatar"> <img src="{{ notification.actor.profile_img.url }}" alt="">
+                                        <div class="drop_avatar"> <img src="{{ notification.actor.id|get_profile_img }}" alt="{{ notification.actor.user.id }}">
                                         </div>
                                         <div class="drop_content">
+
+
                                              <strong class="text-link" >{{ notification.actor }}</strong>
                                                 <span class="text-link"> {{ notification.description }} </span>
-                                                <span>{{notification.recipient}}</span>
+                                                
 
 
                                             <span class="time-ago"> {{notification.timesince}} ago </span>
@@ -315,7 +319,17 @@
 
                               {% endfor %}
                             {% if user.notifications.unread %}
-                         <button class="btn-del" id="notification_btn" onclick="callMyView('{{user.id}}')"><i class="material-icons">delete</i></button>
+                            <style>
+                                .div-del{
+                                            display:flex;
+                                            justify-content:center;
+                                            align-items:center;
+                                            padding-top:10px;
+                                        }
+                            </style>
+                          <div class="div-del">
+                                <button class="btn-del" id="notification_btn" onclick="callMyView('{{user.id}}')"><i class="material-icons">delete</i></button>
+                          </div>
                          {% endif %}
 
 
@@ -1037,37 +1051,23 @@
            }
        });
    }
-//    document.addEventListener('DOMContentLoaded', function() {
-//        const buttons = document.querySelectorAll('[id^="follow-btn-"], [id^="unfollow-btn-"]');
-//        buttons.forEach(button => {
-//            button.addEventListener('click', event => {
-//                event.preventDefault();
-//                const url = button.getAttribute('href');
-//                fetch(url, { method: 'GET' })
-//                    .then(response => response.json())
-//                .then(data => {
-//                    console.log(data)
-//                    if (data.is_following) {
-//                        button.textContent = 'Follow';
-//                        console.log(button.textContent)
-//                        button.setAttribute('href', 'follow/' + data.id_user);
-//                        console.log(button.getAttribute('href'))
-//                    } else {
-//                        button.textContent = 'Unfollow';
-//                        console.log(button.textContent)
-//                        button.setAttribute('href', 'unfollow/' + data.id_user);
-//                        console.log(button.getAttribute('href'))
-//
-//                    }
-//                })
-//                    .catch(error => {
-//                        console.error('Error:', error);
-//                    });
-//            });
-//        });
-//    });
-</script>
+    function submitpost(user) {
+        $.ajax({
+            url: "/",
+            type: "POST",
+            success: function(response) {
+                var x = document.getElementById("toast")
+                x.className = "show";
+                setTimeout(function(){ x.className = x.className.replace("show", ""); }, 4000);
+                var msg=document.getElementById("desc")
+                msg.innerHTML="Successfully Posted"
 
+            }
+        });
+    }
+
+
+</script>
 
 </body>
 
