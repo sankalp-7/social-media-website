@@ -15,6 +15,7 @@ def home(request):
         user_post=request.FILES['user_post']
         caption=request.POST['caption']
         obj=Post.objects.create(picture=user_post,caption=caption,user=request.user)
+        print("POST CREATED")
         print(obj)
     posts=Stream.objects.filter(user=request.user)
     users=Profile.objects.all().exclude(user=request.user)

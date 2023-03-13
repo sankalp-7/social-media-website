@@ -309,9 +309,6 @@
 
                                              <strong class="text-link" >{{ notification.actor }}</strong>
                                                 <span class="text-link"> {{ notification.description }} </span>
-                                                
-
-
                                             <span class="time-ago"> {{notification.timesince}} ago </span>
                                         </div>
                                     </a>
@@ -402,7 +399,7 @@
                                     <a href="#">
                                         <div class="bg-gradient-to-tr from-yellow-600 to-pink-600 p-0.5 rounded-full">
 
-                                            <img src="{{post.post.user.profile_img.url}}" class="bg-gray-200 border border-white rounded-full w-8 h-8">
+                                            <img src="{{post.post.user.id|get_profile_img }}" class="bg-gray-200 border border-white rounded-full w-8 h-8">
 
                                         </div>
                                     </a>
@@ -1041,33 +1038,42 @@
        $.ajax({
            url: "deleteN/"+ buttonData,
            type: "GET",
-           success: function(response) {
+           success: function() {
                    var x = document.getElementById("toast")
                    x.className = "show";
                    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 4000);
                     var msg=document.getElementById("desc")
                     msg.innerHTML="Notifications Deleted"
+                    msg.innerHTML=""
 
            }
        });
    }
-    function submitpost(user) {
-        $.ajax({
-            url: "/",
+
+function submitpost(user)
+        {
+
+            $.ajax({
+                url: "/", // Replace with the URL of your server-side view that handles file uploads
             type: "POST",
-            success: function(response) {
-                var x = document.getElementById("toast")
+            success: function() {
+                console.log("Hello Cming Here Once~?????!?!?!?")
+                var x = document.getElementById("toast");
                 x.className = "show";
                 setTimeout(function(){ x.className = x.className.replace("show", ""); }, 4000);
-                var msg=document.getElementById("desc")
-                msg.innerHTML="Successfully Posted"
+                var msg = document.getElementById("desc");
+                msg.innerHTML = "Successfully posted";
 
             }
-        });
-    }
+            });
+        }
+
+
 
 
 </script>
+
+
 
 </body>
 
