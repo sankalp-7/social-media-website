@@ -35,10 +35,11 @@
     background-color: #ee8282;
     width: 68px;
     height: 35px;
-     }
+    transition: all 0.3s ease;
+		}
     .btn-del:hover{
             background-color:#ee5b5b;
-            transition:0.1s;
+         
             }
       body{
         background-color: white !important;
@@ -173,6 +174,11 @@
 @keyframes fadeout {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 60px; opacity: 0;}
+}
+.like-btn.active{
+   color:black;
+   cursor: pointer;
+    text-decoration: none;
 }
     </style>
 </head>
@@ -337,30 +343,10 @@
 
                         <!-- Messages -->
 
-                        <a href="#" class="header-links-item">
+                        <a href="/rooms" class="header-links-item">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><g fill="currentColor"><path d="M2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/></g></svg>
                         </a>
-                        <div uk-drop="mode: click;offset: 4" class="header_dropdown">
-                            <h4
-                                class="-mt-5 -mx-5 bg-gradient-to-t from-gray-100 to-gray-50 border-b font-bold px-6 py-3">
-                                Messages </h4>
-                            <ul class="dropdown_scrollbar" data-simplebar>
-                                <li>
-                                    <a href="#">
-                                        <div class="drop_avatar"> <img src="{% static 'assets/images/avatars/avatar-1.jpg' %}" alt="">
-                                        </div>
-                                        <div class="drop_content">
-                                            <strong> Taiye </strong> <time> 6:43 PM</time>
-                                            <p> hi tomi </p>
-                                        </div>
-                                    </a>
-                                </li>
-
-
-
-                            </ul>
-                            <a href="#" class="see-all">See all</a>
-                        </div>
+                        
 
                         <!-- profile -->
 
@@ -454,7 +440,7 @@
                             <div class="py-3 px-4 space-y-3">
 
                                 <div class="flex space-x-4 lg:font-bold">
-                                    <a href="#" class="flex items-center space-x-2">
+                                    <a href="#" class="flex items-center space-x-2 like-btn">
                                         <div class="p-2 rounded-full text-black">
                                                <a href="like/{{post.post.id}}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="25" height="25" class="">
@@ -1044,9 +1030,10 @@
                    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 4000);
                     var msg=document.getElementById("desc")
                     msg.innerHTML="Notifications Deleted"
-                    msg.innerHTML=""
+                    
 
            }
+
        });
    }
 
@@ -1066,6 +1053,11 @@ function submitpost(user)
 
             }
             });
+        }
+        let icon = document.getElementsByClassName("like-btn");
+        icon.onclick = function(){
+        icon.classList.toggle('active');
+        console.log("clicked like btn")
         }
 
 
