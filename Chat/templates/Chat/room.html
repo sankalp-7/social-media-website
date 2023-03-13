@@ -1,3 +1,5 @@
+{% load static %}
+{% load helper %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,6 +83,7 @@ body {
   flex: 1;
   padding: 10px;
   overflow-y: scroll;
+  background-image: url('{% static 'images/chat0bg.jpg' %}')
   
 }
 
@@ -152,7 +155,21 @@ body {
     padding: 15px;
     margin: 10px;
 }
-
+.user-profile-img {
+    width: 31px;
+    border-radius: 39px;
+    height: 29px;
+}
+.total-msg-div{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.total-msg-div-pov{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
 
     </style>
 </head>
@@ -173,7 +190,23 @@ body {
           </div>
           <div class="chat-messages" id="chat-messages">
             <!-- chat messages will be displayed here -->
-            {% for m in messages %}<b>{{ m.user.username }}</b>: {{ m.content }}<br>{% endfor %}
+              {% for m in messages %}
+              {% if request.user == m.user %}
+              <div class="total-msg-div-pov">
+                <img src="{{ m.user.id|get_profile_img }}" alt="" width="10px" class="user-profile-img">
+                <div class="msg-div">
+                <b>{{ m.user.username }}</b>: {{ m.content }}<br>
+                </div>
+              </div>
+            {% else %}
+              <div class="total-msg-div">
+                <img src="{{ m.user.id|get_profile_img }}" alt="" width="10px" class="user-profile-img">
+                <div class="msg-div">
+                <b>{{ m.user.username }}</b>: {{ m.content }}<br>
+                </div>
+              </div>
+              {% endif %}
+              {% endfor %}
           </div>
           <div class="chat-input">
             <input type="text" placeholder="Type your message..." name="content" id="chat-message-input">
