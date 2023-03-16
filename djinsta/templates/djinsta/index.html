@@ -175,6 +175,104 @@
     from {bottom: 30px; opacity: 1;}
     to {bottom: 60px; opacity: 0;}
 }
+#toast1 {
+    visibility: hidden;
+    max-width: 50px;
+    height: 50px;
+    /*margin-left: -125px;*/
+    margin: auto;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 10px;
+
+    position: fixed;
+    z-index: 1;
+    left: 0;right:0;
+    bottom: 30px;
+    font-size: 17px;
+    white-space: nowrap;
+}
+#toast1 #img1{
+	width: 50px;
+	height: 50px;
+  border-radius: 10px;
+
+    float: left;
+
+    padding-top: 16px;
+    padding-bottom: 16px;
+
+    box-sizing: border-box;
+
+
+    background-color: #111;
+    color: #fff;
+}
+#toast1 #desc1{
+
+
+    color: #fff;
+
+    padding: 16px;
+
+    overflow: hidden;
+	white-space: nowrap;
+}
+
+#toast1.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 2s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 4s, fadeout 0.5s 4.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes expand {
+    from {min-width: 50px}
+    to {min-width: 350px}
+}
+
+@keyframes expand {
+    from {min-width: 50px}
+    to {min-width: 350px}
+}
+@-webkit-keyframes stay {
+    from {min-width: 350px}
+    to {min-width: 350px}
+}
+
+@keyframes stay {
+    from {min-width: 350px}
+    to {min-width: 350px}
+}
+@-webkit-keyframes shrink {
+    from {min-width: 350px;}
+    to {min-width: 50px;}
+}
+
+@keyframes shrink {
+    from {min-width: 350px;}
+    to {min-width: 50px;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 60px; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 60px; opacity: 0;}
+}
 .like-btn.active{
    color:black;
    cursor: pointer;
@@ -195,20 +293,32 @@
                             </a>
                         </div>
 
-                        <!--<div class="triger" uk-toggle="target: #wrapper ; cls: sidebar-active">
+                        <div class="triger" uk-toggle="target: #wrapper ; cls: sidebar-active">
                             <i class="uil-bars"></i>
-                        </div>-->
+                        </div>
 
-<!--                        <div class="header_search">-->
-<!--                            <input type="text" placeholder="Search for username..">-->
-<!--                            <div class="icon-search">-->
-<!--                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"-->
-<!--                                    stroke="currentColor">-->
-<!--                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"-->
-<!--                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />-->
-<!--                                </svg>-->
-<!--                            </div>-->
-<!--                        </div>-->
+                        <div class="header_search">
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="text" placeholder="Search for username..">
+                                <div class="icon-search">
+                                    <a href="{% url 'djinsta:search_user' %}">
+                                        <button type="submit" name="search-user">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                        </svg>    
+                                        </button>
+                                    </a>
+                                    
+                                     
+                                </div>
+                                
+                                
+                            </form>
+                            
+                        </div>
 
                     </div>
                     <div class="right-side lg:pr-4">
@@ -356,8 +466,7 @@
                         <div uk-drop="mode: click;offset:9" class="header_dropdown profile_dropdown border-t">
                             <ul>
                                 <li><a href="/settings"> Account setting </a> </li>
-                                <li><a href="explore.html">explore </a> </li>
-                                <li><a href="#"> Help </a> </li>
+                                <li><a href="/profile/{{request.user.id}}">Profile </a> </li>
                                 <li><a href="{% url 'djinsta:logout' %}"> Log Out</a></li>
                             </ul>
                         </div>
@@ -464,45 +573,65 @@
                                     </a>
                                 </div>
                                 <div class="flex items-center space-x-3">
-                                    <div class="flex items-center">
-                                        <img src="{% static 'assets/images/avatars/avatar-1.jpg' %}" alt="" class="w-6 h-6 rounded-full border-2 border-white ">
-                                        <img src="{% static 'assets/images/avatars/avatar-4.jpg' %}" alt="" class="w-6 h-6 rounded-full border-2 border-white  -ml-2">
-                                        <img src="{% static 'assets/images/avatars/avatar-2.jpg' %}" alt="" class="w-6 h-6 rounded-full border-2 border-white  -ml-2">
-                                    </div>
+                                   
+                                    
                                     <div class="">
-                                        Liked By <strong> taiye</strong> and <strong> {{post.post.likes}} </strong>
+                                        Liked By <strong> {{post.post.likes}} </strong><strong> Users</strong>
                                     </div>
+                                    
                                 </div>
 
                                 <div class="border-t pt-4 space-y-4 ">
+                                    <img src="{{post.post.user.id|get_profile_img }}" class="bg-gray-200 border border-white rounded-full w-8 h-8" style="display: inline; margin-right: 6px;">
+                                    <h3 style="display: inline;" class="block capitalize font-semibold">{{post.post.user}}:</h3>
+                                    <p style="display: inline; font-weight: 400; color: rgb(43, 41, 41);">{{post.post.caption}}</p>
+                                    <hr>
+                                    <style>
+                                        .comms{
+                                            margin: 0;
+                                            display: flex;
+                                            align-items: baseline;
+                                        }
+                                    </style>
                                     <div class="flex">
-                                        <div class="w-10 h-10 rounded-full relative flex-shrink-0">
-                                            <img src="{% static 'assets/images/avatars/avatar-1.jpg' %}" alt="" class="absolute h-full rounded-full w-full">
-                                        </div>
-                                        <div class="text-gray-700 py-2 px-3 rounded-md bg-gray-100 h-full relative lg:ml-5 ml-2 lg:mr-20   ">
-                                            <p class="leading-6">Y'all like billie eillish? <urna class="i uil-heart"></urna> <i
-                                                    class="uil-grin-tongue-wink"> </i> </p>
-                                            <div class="absolute w-3 h-3 top-3 -left-1 bg-gray-100 transform rotate-45 "></div>
-                                        </div>
+                                        <ul id="comment-list">
+                                            {% for comment in post.post.comments.all %}
+                                            <li class="comms">
+                                                <!-- {{ comment.user.username }}: {{ comment.content }} -->
+                                                <div class="w-10 h-10 rounded-full relative flex-shrink-0">
+                                                    <strong>{{comment.user.username}} </strong>
+                                                </div>
+                                                <div class="text-gray-700 py-2 px-3 rounded-md bg-gray-100 h-full relative lg:ml-5 lg:mr-20   ">
+                                                    <p class="leading-6">{{comment.content}}</p>
+                                                    <div class="absolute w-3 h-3 top-3 -left-1 bg-gray-100 transform rotate-45 "></div>
+                                                </div>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
                                     </div>
-                                    <div class="flex">
-                                        <div class="w-10 h-10 rounded-full relative flex-shrink-0">
-                                            <img src="{% static 'assets/images/avatars/avatar-1.jpg' %}" alt="" class="absolute h-full rounded-full w-full">
-                                        </div>
-                                        <div class="text-gray-700 py-2 px-3 rounded-md bg-gray-100 h-full relative lg:ml-5 ml-2 lg:mr-20   ">
-                                            <p class="leading-6">She's my favourite <i class="uil-grin-tongue-wink-alt"></i>
-                                            </p>
-                                            <div class="absolute w-3 h-3 top-3 -left-1 bg-gray-100 transform rotate-45 "></div>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
-
+                                <style>
+                                    .comment-div{
+                                        display: flex;
+                                        flex-direction: row;
+                                    }
+                                </style>
                                 <div class="bg-gray-100 bg-gray-100 rounded-full rounded-md relative ">
-                                    <input type="text" placeholder="post a comment" class="bg-transparent max-h-10 shadow-none">
-                                    <div class="absolute bottom-0 flex h-full items-center right-0 right-3 text-xl space-x-2">
-                                        <a href="#"> <i class="uil-image"></i></a>
-                                        <a href="#"> <i class="uil-video"></i></a>
-                                    </div>
+                                    
+                                        <form action="post" style="display: inline;" id="comment-form">
+                                            {% csrf_token %}
+                                            <div class="comment-div">
+                                                <input type="hidden" name="post_id" value="{{ post.post.id }}">
+                                                <input type="text" placeholder="post a comment" class="bg-transparent max-h-10 shadow-none" name="comment">
+                                                <button type="submit" style="margin-right: 20px;" name="comment-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16" onclick="submitcomment()">
+                                                    <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
+                                                  </svg></button>
+                                            </div>
+                                            
+                                           
+                                        </form>
+                                    
                                 </div>
 
                             </div>
@@ -979,6 +1108,11 @@
                                 <div id="toast">
   <div id="img">!!</div>
   <div id="desc"></div>
+
+  <div id="toast1">
+    <div id="img1">!!</div>
+    <div id="desc1"></div>
+  </div>
 </div>
 
 
@@ -1045,23 +1179,52 @@ function submitpost(user)
             type: "POST",
             success: function() {
                 console.log("Hello Cming Here Once~?????!?!?!?")
-                var x = document.getElementById("toast");
+                var x = document.getElementById("toast1");
                 x.className = "show";
                 setTimeout(function(){ x.className = x.className.replace("show", ""); }, 4000);
-                var msg = document.getElementById("desc");
+                var msg = document.getElementById("desc1");
                 msg.innerHTML = "Successfully posted";
 
             }
             });
         }
-        let icon = document.getElementsByClassName("like-btn");
-        icon.onclick = function(){
-        icon.classList.toggle('active');
-        console.log("clicked like btn")
-        }
+</script>
+<script>
+    const commentForm = document.getElementById('comment-form');
+    
+    commentForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    console.log("wohooo")
+    const formData = new FormData(commentForm);
+    
+    const csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+    const xhr = new XMLHttpRequest();
 
+    xhr.open('POST', '/comment/');
+    xhr.setRequestHeader('X-CSRFToken', csrfToken);
+    xhr.onload = () => {
+    const response = JSON.parse(xhr.responseText);
+    const commentList = document.getElementById('comment-list');
+    console.log(commentList)
+    const newComment = `
+      <li>  
+      <div class="w-10 h-10 rounded-full relative flex-shrink-0">
+       <strong>${response.comment_user}</strong>
+       </div>
+       <div class="text-gray-700 py-2 px-3 rounded-md bg-gray-100 h-full relative lg:ml-5 ml-2 lg:mr-20   ">
+        <p class="leading-6"> ${response.comment_text}</p>
+        <div class="absolute w-3 h-3 top-3 -left-1 bg-gray-100 transform rotate-45 "></div>
+        </div>
+    </li>
+    `;
 
+   
+    commentList.insertAdjacentHTML('beforeend', newComment);
+    commentForm.reset();
+    };
 
+    xhr.send(formData);
+});
 
 </script>
 

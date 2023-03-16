@@ -167,8 +167,9 @@ body {
 }
 .total-msg-div-pov{
   display: flex;
+  flex-direction: row-reverse;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
     </style>
@@ -191,23 +192,15 @@ body {
           <div class="chat-messages" id="chat-messages">
             <!-- chat messages will be displayed here -->
               {% for m in messages %}
-              {% if request.user == m.user %}
-              <div class="total-msg-div-pov">
+              <div class="total-msg-div" id="changer">
                 <img src="{{ m.user.id|get_profile_img }}" alt="" width="10px" class="user-profile-img">
                 <div class="msg-div">
+                  
                 <b>{{ m.user.username }}</b>: {{ m.content }}<br>
                 </div>
               </div>
-            {% else %}
-              <div class="total-msg-div">
-                <img src="{{ m.user.id|get_profile_img }}" alt="" width="10px" class="user-profile-img">
-                <div class="msg-div">
-                <b>{{ m.user.username }}</b>: {{ m.content }}<br>
-                </div>
-              </div>
-              {% endif %}
               {% endfor %}
-          </div>
+          </div>  
           <div class="chat-input">
             <input type="text" placeholder="Type your message..." name="content" id="chat-message-input">
             <button id="chat-message-submit">Send</button>
@@ -236,7 +229,13 @@ body {
               const data = JSON.parse(e.data);
 
               if (data.message) {
-                  document.querySelector('#chat-messages').innerHTML += ('<div class="msg-div">'+'<b>' + data.username + '</b>: ' + data.message +'</div>'+ '<br>');
+                  if (data.username!=userName){
+                    document.querySelector('#chat-messages').innerHTML += ('<div class="msg-div">'+'<b>' + data.username + '</b>: ' + data.message +'</div>'+ '<br>');
+                  }
+                  else{
+                    document.querySelector('#chat-messages').innerHTML += ('<div class="msg-div">'+'<b>' + 'You'+ '</b>: ' + data.message +'</div>'+ '<br>');
+                  }
+                  
               } else {
                   alert('The message was empty!')
               }
@@ -257,12 +256,7 @@ body {
               const messageInputDom = document.querySelector('#chat-message-input');
               const message = messageInputDom.value;
 
-              console.log({
-                  'message': message,
-                  'username': userName,
-                  'room': roomName
-              })
-
+            
               chatSocket.send(JSON.stringify({
                   'message': message,
                   'username': userName,

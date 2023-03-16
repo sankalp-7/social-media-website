@@ -71,6 +71,12 @@ class Stream(models.Model):
             stream=Stream.objects.create(post=post,user=follower.follower,following=user,date=post.posted)
             stream.save()
             notify.send(user, recipient=follower.follower, verb='Post Notification', description='Just Posted!')
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField(max_length=1000)
+    posted = models.DateTimeField(auto_now_add=True)
+
 
 
 

@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from notifications.signals import notify
 from.models import Profile
-from post.models import Follow,Stream,Post
+from post.models import Follow,Stream,Post,Comment
 from notifications.models import Notification
 # Create your views here.
 
@@ -149,12 +149,31 @@ def like_post(request,pid):
     return redirect('/')
 def profile(request,pk):
     user=Profile.objects.get(id_user=pk)
+    post_count=Post.objects.filter(user=user.user).count()
+    following_count=Follow.objects.filter(follower=user.user).count()
     posts=Post.objects.filter(user=user.user)
-    return render(request,'djinsta/profile.html',{'user':user,'photos':posts})
+    return render(request,'djinsta/profile.html',{'user':user,'photos':posts,'post_count':post_count,'following_count':following_count})
 def delete_notification(request,pk):
     user=User.objects.get(pk=pk)
     qs=Notification.objects.filter(deleted=False,recipient=user).delete()
     return JsonResponse({'result':'success'})
+def search_user(request):
+    return render(request,'djinsta/search.html')
+
+def comment(request):
+    curr_user=Profile.objects.get(user=request.user)
+    print(curr_user)
+    if request.method=='POST':
+        post_id=request.POST['post_id']
+        comment=request.POST['comment']
+        post_obj=Post.objects.get(id=post_id)
+        comment=Comment.objects.create(post=post_obj,user=curr_user.user,content=comment)
+    data = {
+            'comment_user_id':comment.user.id,
+            'comment_text': comment.content,
+            'comment_user': comment.user.username,
+        }
+    return JsonResponse(data)
 
 
 

@@ -82,10 +82,14 @@ WSGI_APPLICATION = 'social_media_app.wsgi.application'
 ASGI_APPLICATION = 'social_media_app.asgi.application'
 
 CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels.layers.InMemoryChannelLayer'
-    }
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        }
+    },
 }
+
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
