@@ -583,18 +583,19 @@
 
                                 <div class="border-t pt-4 space-y-4 ">
                                     <img src="{{post.post.user.id|get_profile_img }}" class="bg-gray-200 border border-white rounded-full w-8 h-8" style="display: inline; margin-right: 6px;">
-                                    <h3 style="display: inline;" class="block capitalize font-semibold">{{post.post.user}}:</h3>
-                                    <p style="display: inline; font-weight: 400; color: rgb(43, 41, 41);">{{post.post.caption}}</p>
-                                    <hr>
+                                    <h3 style="display: inline;" class="block capitalize font-semibold">{{post.post.user}}</h3>
+                                    <p style="display: inline;  color: rgb(43, 41, 41);">{{post.post.caption}}</p>
+                                    
                                     <style>
                                         .comms{
                                             margin: 0;
                                             display: flex;
                                             align-items: baseline;
+                                            gap:30px;
                                         }
                                     </style>
                                     <div class="flex">
-                                        <ul id="comment-list">
+                                        <ul id="comment-list-{{post.post.id}}">
                                             {% for comment in post.post.comments.all %}
                                             <li class="comms">
                                                 <!-- {{ comment.user.username }}: {{ comment.content }} -->
@@ -612,19 +613,16 @@
                                     
                                 </div>
                                 <style>
-                                    .comment-div{
-                                        display: flex;
-                                        flex-direction: row;
-                                    }
+                                  
                                 </style>
                                 <div class="bg-gray-100 bg-gray-100 rounded-full rounded-md relative ">
                                     
-                                        <form action="post" style="display: inline;" id="comment-form">
+                                        <form method="post" style="display: inline;" id="comment-form-{{post.post.id}}" class="comment-form">
                                             {% csrf_token %}
-                                            <div class="comment-div">
-                                                <input type="hidden" name="post_id" value="{{ post.post.id }}">
+                                            <div class="comment-div-{{post.post.id}}" style="display: flex;">
+                                                <input type="hidden" name="post_id" value="{{ post.post.id }}" id="post_id">
                                                 <input type="text" placeholder="post a comment" class="bg-transparent max-h-10 shadow-none" name="comment">
-                                                <button type="submit" style="margin-right: 20px;" name="comment-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16" onclick="submitcomment()">
+                                                <button type="submit" style="margin-right: 20px;" id="comment-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
                                                     <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
                                                   </svg></button>
                                             </div>
@@ -1063,8 +1061,8 @@
                         <div class="bg-white  shadow-md rounded-md overflow-hidden">
 
                             <div class="bg-gray-50  border-b border-gray-100 flex items-baseline justify-between py-4 px-6 ">
-                                <h2 class="font-semibold text-lg">Users You Can Follow</h2>
-                                <a href="#"> Refresh</a>
+                                <h2 class="font-semibold text-lg" style="text-align: center;">Users You Can Follow</h2>
+                                
                             </div>
 
                             <div class="divide-gray-300 divide-gray-50 divide-opacity-50 divide-y px-4 ">
@@ -1171,59 +1169,57 @@
        });
    }
 
-function submitpost(user)
-        {
 
-            $.ajax({
-                url: "/", // Replace with the URL of your server-side view that handles file uploads
-            type: "POST",
-            success: function() {
-                console.log("Hello Cming Here Once~?????!?!?!?")
-                var x = document.getElementById("toast1");
-                x.className = "show";
-                setTimeout(function(){ x.className = x.className.replace("show", ""); }, 4000);
-                var msg = document.getElementById("desc1");
-                msg.innerHTML = "Successfully posted";
-
-            }
-            });
-        }
 </script>
 <script>
-    const commentForm = document.getElementById('comment-form');
-    
-    commentForm.addEventListener('submit', (event) => {
+    // get all comment forms on the page
+const commentForms = document.querySelectorAll('.comment-form');
+
+// loop through each form and add an event listener
+commentForms.forEach((commentForm) => {
+  commentForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    console.log("wohooo")
+
+    // get the post ID from the hidden input field in the form
+    const postID = commentForm.querySelector('input[name="post_id"]').value;
+
+    // create a new FormData object from the form data
     const formData = new FormData(commentForm);
-    
+
+    // add the CSRF token to the request headers
     const csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
     const xhr = new XMLHttpRequest();
-
     xhr.open('POST', '/comment/');
     xhr.setRequestHeader('X-CSRFToken', csrfToken);
-    xhr.onload = () => {
-    const response = JSON.parse(xhr.responseText);
-    const commentList = document.getElementById('comment-list');
-    console.log(commentList)
-    const newComment = `
-      <li>  
-      <div class="w-10 h-10 rounded-full relative flex-shrink-0">
-       <strong>${response.comment_user}</strong>
-       </div>
-       <div class="text-gray-700 py-2 px-3 rounded-md bg-gray-100 h-full relative lg:ml-5 ml-2 lg:mr-20   ">
-        <p class="leading-6"> ${response.comment_text}</p>
-        <div class="absolute w-3 h-3 top-3 -left-1 bg-gray-100 transform rotate-45 "></div>
-        </div>
-    </li>
-    `;
 
-   
-    commentList.insertAdjacentHTML('beforeend', newComment);
-    commentForm.reset();
+    xhr.onload = () => {
+      const response = JSON.parse(xhr.responseText);
+
+      // find the comment list for the current post ID
+      const commentList = document.getElementById(`comment-list-${postID}`);
+
+      // create the new comment HTML
+      const newComment = `
+        <li>  
+          <div class="w-10 h-10 rounded-full relative flex-shrink-0">
+            <strong>${response.comment_user}</strong>
+          </div>
+          <div class="text-gray-700 py-2 px-3 rounded-md bg-gray-100 h-full relative lg:ml-5 ml-2 lg:mr-20">
+            <p class="leading-6">${response.comment_text}</p>
+            <div class="absolute w-3 h-3 top-3 -left-1 bg-gray-100 transform rotate-45"></div>
+          </div>
+        </li>
+      `;
+
+      // append the new comment to the comment list
+      commentList.insertAdjacentHTML('beforeend', newComment);
+
+      // reset the form
+      commentForm.reset();
     };
 
     xhr.send(formData);
+  });
 });
 
 </script>

@@ -161,6 +161,7 @@ def search_user(request):
     return render(request,'djinsta/search.html')
 
 def comment(request):
+    print("coming?>>>>>>>>")
     curr_user=Profile.objects.get(user=request.user)
     print(curr_user)
     if request.method=='POST':
@@ -169,7 +170,7 @@ def comment(request):
         post_obj=Post.objects.get(id=post_id)
         comment=Comment.objects.create(post=post_obj,user=curr_user.user,content=comment)
     data = {
-            'comment_user_id':comment.user.id,
+            'post_id':post_id,
             'comment_text': comment.content,
             'comment_user': comment.user.username,
         }
