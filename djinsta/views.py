@@ -169,6 +169,7 @@ def comment(request):
         comment=request.POST['comment']
         post_obj=Post.objects.get(id=post_id)
         comment=Comment.objects.create(post=post_obj,user=curr_user.user,content=comment)
+        notify.send(curr_user.user, recipient=post_obj.user, verb='Comment Notification', description='Commented On Your Post')
     data = {
             'post_id':post_id,
             'comment_text': comment.content,
