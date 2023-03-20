@@ -96,8 +96,12 @@ CHANNEL_LAYERS = {
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'djinstadb',
+        'USER': 'admin',
+        'PASSWORD': 'lq11pnwifi',
+        'HOST': 'djinsta-db.cct3vfiws5ig.us-east-1.rds.amazonaws.com',
+        'PORT': 3306
     }
 }
 

@@ -952,21 +952,20 @@
 
 </script>
 <script>
-    // get all comment forms on the page
+  
 const commentForms = document.querySelectorAll('.comment-form');
 
-// loop through each form and add an event listener
 commentForms.forEach((commentForm) => {
   commentForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    // get the post ID from the hidden input field in the form
+
     const postID = commentForm.querySelector('input[name="post_id"]').value;
 
-    // create a new FormData object from the form data
+    
     const formData = new FormData(commentForm);
 
-    // add the CSRF token to the request headers
+    
     const csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/comment/');
@@ -974,10 +973,7 @@ commentForms.forEach((commentForm) => {
 
     xhr.onload = () => {
       const response = JSON.parse(xhr.responseText);
-      // find the comment list for the current post ID
       const commentList = document.getElementById(`comment-list-${postID}`);
-
-      // create the new comment HTML
       const newComment = `
         <li class="comms">  
           <div>
@@ -988,11 +984,8 @@ commentForms.forEach((commentForm) => {
           </div>
         </li>
       `;
-
-      // append the new comment to the comment list
       commentList.insertAdjacentHTML('beforeend', newComment);
 
-      // reset the form
       commentForm.reset();
     };
 
