@@ -461,7 +461,7 @@
                         <!-- profile -->
 
                         <a href="#">
-                            <img src="{% static 'assets/images/avatars/avatar-2.jpg' %}" class="header-avatar" alt="">
+                            <img src="{{request.user.id|get_profile_img}}" class="header-avatar" alt="">
                         </a>
                         <div uk-drop="mode: click;offset:9" class="header_dropdown profile_dropdown border-t">
                             <ul>
