@@ -14,11 +14,12 @@
 			min-height: 100vh;
             box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-        
+
 		}
 
 		.room-container {
 			display: flex;
+      flex-direction: row;
 			flex-wrap: wrap;
 			margin-top: 30px;
 		}
@@ -37,7 +38,7 @@
 			.room-card:nth-child(2n) {
 				margin-right: 0;
 			}
-			
+
 		}
 		@media  screen and (max-width:768px) {
 			.room-container{
@@ -84,6 +85,148 @@
   text-decoration: none;
   color: inherit;
 }
+         @import url(https://fonts.googleapis.com/css?family=Lato:400,600,700);
+.snip1527 {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  color: #ffffff;
+  float: left;
+  font-family: 'Lato', Arial, sans-serif;
+  font-size: 16px;
+  margin: 10px 1%;
+  max-width: 310px;
+  min-width: 250px;
+  overflow: hidden;
+  position: relative;
+  text-align: left;
+  width: 100%;
+  height: 254px; /* adjust as needed */
+  padding-bottom: 10px; /* adjust as needed */
+}
+
+.snip1527 * {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+}
+
+.snip1527 img {
+  max-width: 100%;
+  vertical-align: top;
+  position: relative;
+}
+
+.snip1527 figcaption {
+  padding: 25px 20px 25px;
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  left: 0;
+  right: 0;
+}
+
+.snip1527 figcaption:before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #700877;
+  content: '';
+  background: -moz-linear-gradient(90deg, #700877 0%, #ff2759 100%, #ff2759 100%);
+  background: -webkit-linear-gradient(90deg, #700877 0%, #ff2759 100%, #ff2759 100%);
+  background: linear-gradient(90deg, #700877 0%, #ff2759 100%, #ff2759 100%);
+  opacity: 0.8;
+  z-index: -1;
+}
+
+.snip1527 .date {
+  background-color: #fff;
+  border-radius: 50%;
+  color: #700877;
+  font-size: 18px;
+  font-weight: 700;
+  min-height: 48px;
+  min-width: 48px;
+  padding: 10px 0;
+  position: absolute;
+  right: 15px;
+  text-align: center;
+  text-transform: uppercase;
+  top: -25px;
+}
+
+.snip1527 .date span {
+  display: block;
+  line-height: 14px;
+}
+
+.snip1527 .date .month {
+  font-size: 11px;
+}
+
+.snip1527 h3,
+.snip1527 p {
+  margin: 0;
+  padding: 0;
+}
+
+.snip1527 h3 {
+  display: inline-block;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  margin-bottom: 5px;
+}
+
+.snip1527 p {
+  font-size: 0.8em;
+  line-height: 1.6em;
+  margin-bottom: 0px;
+}
+
+.snip1527 a {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  z-index: 1;
+}
+
+.snip1527:hover img,
+.snip1527.hover img {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+
+/* Demo purposes only */
+
+body {
+  background-color: #212121;
+}
+.btn-join{
+  width: 38px;
+  border-radius: 40px;
+  background-color: #700877;
+  border:0;
+  color:white;
+  font-weight: bold;
+}
+.btn-join:hover{
+  text-decoration: underline;
+}
+.snip1527 h3 {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.snip1527 a.btn-join {
+  display: block;
+  margin-top: 10px; /* add some space between h3 and button */
+}
 	</style>
 </head>
 <body>
@@ -92,15 +235,17 @@
 		<hr>
 		<br>
 		<div class="room-container">
-			{% for room in rooms %}
-			<div class="room-card">
-				<div class="card-body">
-					<h2 class="room-title">{{ room.name }}</h2>
-					<a href="{% url 'room' room.slug %}" class="room-join">JOIN</a>
-				</div>
-			</div>
-			{% endfor %}
-		</div>
+    {% for room in rooms %}
+    <a href="{% url 'room' room.slug %}" style="margin-right: 15px;">
+    <figure class="snip1527">
+      <div class="image"><img src="{% static 'images/valo.webp' %}" alt="pr-sample23" /></div>
+      <figcaption style="background-color: rgba(0, 0, 0, 0.3); padding: 20px; height: 100px;" style="display: block;">
+        <h6 style="color: #fff;text-align: center;">{{room.name}}</h6>
+      </figcaption>
+    </figure>
+    </a>
+    {% endfor %}
+  </div>
 	</div>
 </body>
 </html>

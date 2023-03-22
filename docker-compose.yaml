@@ -1,0 +1,37 @@
+version: "3.9"
+services:
+  app:
+    build: .
+    environment:
+      - REDIS_HOST=redis
+    volumes:
+      - .:/djinsta
+    ports:
+      - 8000:8000
+    image: sankalp733/djinsta:latest
+    container_name: django_container
+    command: python manage.py runserver 0.0.0.0:8000
+    depends_on:
+      - db 
+      - redis
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: 'djinstadb'
+      MYSQL_USER: 'admin'
+      MYSQL_PASSWORD: 'lq11pnwifi'
+      MYSQL_ROOT_PASSWORD: 'lq11pnwifi'
+    ports:
+      - 3307:3306
+    volumes:
+      - ./data/mysql/db:/var/lib/mysql
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - 6379:6379
+    
+
+
+
+

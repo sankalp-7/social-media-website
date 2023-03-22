@@ -229,12 +229,9 @@ body {
               const data = JSON.parse(e.data);
 
               if (data.message) {
-                  if (data.username!=userName){
-                    document.querySelector('#chat-messages').innerHTML += ('<div class="msg-div">'+'<b>' + data.username + '</b>: ' + data.message +'</div>'+ '<br>');
-                  }
-                  else{
-                    document.querySelector('#chat-messages').innerHTML += ('<div class="msg-div">'+'<b>' + 'You'+ '</b>: ' + data.message +'</div>'+ '<br>');
-                  }
+
+                  document.querySelector('#chat-messages').innerHTML += ('<div class="msg-div">'+'<b>' + data.username + '</b>: ' + data.message +'</div>'+ '<br>');
+
                   
               } else {
                   alert('The message was empty!')
