@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-yw_t4h8t8jo=r*oty4c6(-nigq!@w9--yu_g%en(l_xt12isdi'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['172.16.197.236','127.0.0.1']
+ALLOWED_HOSTS = ['localhost','172.16.197.236','127.0.0.1']
 NOTIFICATIONS_SOFT_DELETE=True
 
 
@@ -85,7 +85,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("localhost", 6379)],
+            "hosts": [("redis", 6379)],
         }
     },
 }
