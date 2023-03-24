@@ -3,8 +3,8 @@
 <head>
 </head>
 <body>
-	<h1>Django Social Media Web App with Docker</h1>
-<p>This is a Django-based social media web app that uses Docker for containerization. The app allows users to create posts, like and comment on posts, and follow other users.</p>
+	<h1>Django Social Media Web App -- Djinsta🔥</h1>
+<p>This is a Django-based social media web app that uses Docker for containerization. The app allows users to create posts, like and comment on posts,chat and follow other users.</p>
 
 <h2>Requirements</h2>
 
@@ -20,6 +20,9 @@
 	<pre>
 		git clone https://github.com/yourusername/django-social-media-webapp.git
 		cd django-social-media-webapp
+	</pre>
+	<pre>
+		pip install -r requirements.txt
 	</pre>
 
 	<li>Create a <code>.env</code> file in the root directory with the following environment variables:</li>
