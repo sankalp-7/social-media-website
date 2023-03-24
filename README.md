@@ -21,6 +21,10 @@
 		git clone https://github.com/yourusername/django-social-media-webapp.git
 		cd django-social-media-webapp
 	</pre>
+	<li>Install Requirements</li>
+	<pre>
+		pip install -r requirements.txt
+	</pre>
 	
 	</li>
 
