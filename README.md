@@ -38,17 +38,20 @@
 	<p>Replace <code>your_secret_key_here</code> with a secret key for your Django app.</p>
 	</li>
 
-	<li>Build and start the Docker containers:</li>
+	<li>Build and start the Docker containers:
 	<pre>docker-compose up --build</pre>
+	</li>
 
-	<li>Create the initial database tables and load the initial data:</li>
+	<li>Create the initial database tables and load the initial data:
 	<pre>
 		docker-compose exec web python manage.py migrate
 		docker-compose exec web python manage.py loaddata initial_data.json
 	</pre>
+	</li>
 
-	<li>Create a superuser account:</li>
+	<li>Create a superuser account:
 	<pre>docker-compose exec web python manage.py createsuperuser</pre>
+	</li>
 
 	<li>Access the web app at <a href="http://localhost:8000/">http://localhost:8000/</a> and log in with your superuser account.</li>
 </ol>
