@@ -38,7 +38,7 @@
 		DB_PORT=5432
 	</pre>
 	
-	</li>
+	
 
 	<li>Build and start the Docker containers:
 	<pre>docker-compose up --build</pre>
