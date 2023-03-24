@@ -37,7 +37,7 @@
 		DB_HOST=db
 		DB_PORT=5432
 	</pre>
-	<p>Replace <code>your_secret_key_here</code> with a secret key for your Django app.</p>
+	
 	</li>
 
 	<li>Build and start the Docker containers:
