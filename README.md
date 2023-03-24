@@ -16,7 +16,7 @@
 <h2>Installation and Setup</h2>
 
 <ol>
-	<li>Clone the repository:</li>
+	<li>Clone the repository:
 	<pre>
 		git clone https://github.com/yourusername/django-social-media-webapp.git
 		cd django-social-media-webapp
@@ -24,6 +24,7 @@
 	<pre>
 		pip install -r requirements.txt
 	</pre>
+	</li>
 
 	<li>Create a <code>.env</code> file in the root directory with the following environment variables:</li>
 	<pre>
