@@ -67,10 +67,6 @@
 <h2>Deployment</h2>
 
 <p>The web app can be deployed to a production server using a platform like Docker Swarm or Kubernetes. You will need to update the <code>docker-compose.yml</code> file with your production environment settings and configure your production server accordingly.</p>
-
-<h2>License</h2>
-
-<p>This project is licensed under the MIT License. See the <code>LICENSE</code> file for details.</p>
 </body>
 </html>
 
