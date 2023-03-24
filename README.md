@@ -26,7 +26,7 @@
 		pip install -r requirements.txt
 	</pre>
 	
-	</li>
+	
 
 	<li>Create a <code>.env</code> file in the root directory with the following environment variables:</li>
 	<pre>
