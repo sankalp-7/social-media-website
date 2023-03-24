@@ -28,7 +28,7 @@
 	
 	
 
-	<li>Create a <code>.env</code> file in the root directory with the following environment variables:</li>
+	<li>Create a .env file in the root directory with the following environment variables:</li>
 	<pre>
 		SECRET_KEY=your_secret_key_here
 		DEBUG=True
