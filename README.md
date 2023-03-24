@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Django Social Media Web App with Docker</title>
 </head>
 <body>
 	<h1>Django Social Media Web App with Docker</h1>
