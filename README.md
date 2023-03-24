@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Django Social Media Web App with Docker</title>
+</head>
+<body>
+	<h1>Django Social Media Web App with Docker</h1>
 <p>This is a Django-based social media web app that uses Docker for containerization. The app allows users to create posts, like and comment on posts, and follow other users.</p>
 
 <h2>Requirements</h2>
@@ -60,5 +68,6 @@
 <h2>License</h2>
 
 <p>This project is licensed under the MIT License. See the <code>LICENSE</code> file for details.</p>
-
+</body>
+</html>
 
