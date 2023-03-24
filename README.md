@@ -31,11 +31,11 @@
 	<pre>
 		SECRET_KEY=your_secret_key_here
 		DEBUG=True
-		DB_NAME=db
-		DB_USER=dbuser
-		DB_PASSWORD=dbpass
-		DB_HOST=db
-		DB_PORT=5432
+		DB_NAME=YOUR_DB_NAME
+		DB_USER=YOUR_DB_USERNAME
+		DB_PASSWORD=YOUR_DB_PASSWORD
+		DB_HOST=YOUR_DB_HOST
+		DB_PORT=YOUR_DB_PORT(3306 FOR MYSQL)
 	</pre>
 	</li>
 	<li>Build and start the Docker containers:
