@@ -21,10 +21,12 @@
 		git clone https://github.com/sankalp-7/Djinsta.git
 		cd social_media_app
 	</pre>
-	<li>Install Requirements</li>
+	</li>
+	<li>Install Requirements
 	<pre>
 		pip install -r requirements.txt
 	</pre>
+	</li>
 	<li>Create a .env file in the root directory with the following environment variables:
 	<pre>
 		SECRET_KEY=your_secret_key_here
