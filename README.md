@@ -18,17 +18,14 @@
 <ol>
 	<li>Clone the repository:
 	<pre>
-		git clone https://github.com/yourusername/django-social-media-webapp.git
-		cd django-social-media-webapp
+		git clone https://github.com/sankalp-7/Djinsta.git
+		cd social_media_app
 	</pre>
 	<li>Install Requirements</li>
 	<pre>
 		pip install -r requirements.txt
 	</pre>
-	
-	
-
-	<li>Create a .env file in the root directory with the following environment variables:</li>
+	<li>Create a .env file in the root directory with the following environment variables:
 	<pre>
 		SECRET_KEY=your_secret_key_here
 		DEBUG=True
@@ -39,6 +36,7 @@
 		DB_PORT=5432
 	</pre>
 	<p>Replace <code>your_secret_key_here</code> with a secret key for your Django app.</p>
+	</li>
 
 	<li>Build and start the Docker containers:</li>
 	<pre>docker-compose up --build</pre>
