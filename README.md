@@ -50,7 +50,8 @@
 	<li>Create a superuser account:
 	<pre>docker-compose exec web python manage.py createsuperuser</pre>
 	</li>
-	<li>Access the web app at <a href="http://localhost:8000/">http://localhost:8000/</a> and log in with your superuser account.</li>
+	<li>
+		<pre>Access the web app at <a href="http://localhost:8000/">http://localhost:8000/</a> and log in with your superuser account.</pre></li>
 </ol>
 
 <h2>Usage</h2>
