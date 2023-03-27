@@ -55,7 +55,7 @@
 
 <h2>Usage</h2>
 
-<p>The web app allows users to create posts, like and comment on posts, and follow other users. Users can also edit their profiles and view other users' profiles.</p>
+<p>The web app allows users to create posts, like and comment on posts,Chat with fellow friends and follow other users. Users can also edit their profiles and view other users' profiles.</p>
 
 <h2>Development</h2>
 
