@@ -29,8 +29,7 @@
 	</li>
 	<li>Create a .env file in the root directory with the following environment variables:
 	<pre>
-		SECRET_KEY=your_secret_key_here
-		DEBUG=True
+		KEY=your_secret_key_here
 		DB_NAME=YOUR_DB_NAME
 		DB_USER=YOUR_DB_USERNAME
 		DB_PASSWORD=YOUR_DB_PASSWORD
