@@ -29,7 +29,7 @@
     justify-content: center;
     align-items: center;
     height: 80px; 
-    margin-top: 18px;
+    
 }
 
 .image {
@@ -47,6 +47,7 @@
             <header style="margin-top: -23px;">
                 <div class="header_inner">
                     <div class="left-side">
+                        <a href="/"><i class="fas fa-home"></i></a>&nbsp;&nbsp;&nbsp;
                         <!-- Logo -->
                         <div id="logo" class=" uk-hidden@s">
                             <a href="/">
@@ -64,7 +65,7 @@
                             <div style="display: flex; align-items: center;">
                                 <input type="text" name="search-username" placeholder="Search for username.." style="padding-right: 35px; border-radius: 4px 0 0 4px;  height: 38px; width: 300px;">
                             
-                                <button type="submit" style="width: 40px; height: 38px; background-color: #ffffff; border: 0px solid #eceaea; border-left: none; border-radius: 0 4px 4px 0;">
+                                <button type="submit" style="width: 40px; height: 38px; background-color: #ffffff; border: 1px solid #eceaea; border-left: none; border-radius: 0 4px 4px 0;">
                                     <i class="fas fa-search"></i>
                                 </button>
                             </div>
@@ -285,23 +286,29 @@
                     <div class="col-md-9 col-md-pull-3">
                         <!-- <p class="search-results-count">About 94 700 000 (0.39 sec.) results</p> -->
                         {% for users in username_profile_list %}
-<section class="search-result-item" style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
+<section class="search-result-item" style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; display: flex; align-items: center;">
     <a class="image-link" href="/profile/{{users.user.id}}">
         <div class="image-container">
             <img class="image rounded-full" src="{{users.id_user|get_profile_img}}">
         </div>
     </a>
-    <div class="search-result-item-body">
-        <div class="row">
-            <div class="col-sm-9">
-                <h4 class="search-result-item-heading"><a href="/profile/{{users.user.id}}"><b>@{{users.user}}</b></a></h4>
-                <p class="info">{{users.location}}</p>
-                <p class="description">{{users.bio}}</p>
-            </div>
+    <div class="search-result-item-body" style="flex: 1; margin-left: 20px;">
+        <div>
+            <h4 class="search-result-item-heading"><a href="/profile/{{users.user.id}}"><b>@{{users.user}}</b></a></h4>
+            <p class="info">{{users.location}}</p>
+            <p class="description">{{users.bio}}</p>
         </div>
+    </div>
+    <div style="margin-left: 20px;">
+        {% if users.user.username in following_list %}
+            <a href="/unfollow/{{users.id_user}}" id="unfollow-btn-{{users.id_user}}" class="border border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600">Unfollow</a>
+        {% else %}
+            <a href="/follow/{{users.id_user}}" id="follow-btn-{{users.id_user}}" class="border border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600">Follow</a>
+        {% endif %}
     </div>
 </section>
 {% endfor %}
+
 
 
                         
