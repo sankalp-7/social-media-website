@@ -1,5 +1,6 @@
 {% load static %}
-
+{% load helper %}
+{% load notifications_tags %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,10 +17,15 @@
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/tailwind.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+          body{
+        background-color: white !important;
+      }
+    </style>
 </head>
 
 <body>
-            <form action="search" method="POST">
+            <form action="/search/" method="POST">
             {% csrf_token %}
             <header style="margin-top: -23px;">
                 <div class="header_inner">
@@ -36,9 +42,9 @@
                         </div>-->
 
                         <!-- <div class="header_search"> -->
-                            
-                                <input type="text" name="username" placeholder="Search for username..">&nbsp; &nbsp;
-                                <button type="submit"><i class="fa fa-search fa-1x"></i></button>
+                                
+                                <input type="text" name="search-username" placeholder="Search for username..">&nbsp; &nbsp;
+                                <input type="submit" value="submit">
                             
                             <!-- <div class="icon-search">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -321,8 +327,8 @@
                         <!-- <p class="search-results-count">About 94 700 000 (0.39 sec.) results</p> -->
                         
                         {% for users in username_profile_list %}
-                        <section class="search-result-item">
-                            <a class="image-link" href="/profile/{{users.user}}"><img class="image" src="{{users.profileimg.url}}">
+                        <section class="search-result-item" style="background-color: beige;">
+                            <a class="image-link" href="/profile/{{users.user}}"><img class="image" src="{{users.id_user|get_profile_img}}" class="bg-gray-200 rounded-full w-10 h-10">
                             </a>
                             <div class="search-result-item-body">
                                 <div class="row">
