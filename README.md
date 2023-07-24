@@ -27,16 +27,7 @@
 		pip install -r requirements.txt
 	</pre>
 	</li>
-	<li>Create a .env file in the root directory with the following environment variables:
-	<pre>
-		KEY=your_secret_key_here
-		DB_NAME=YOUR_DB_NAME
-		DB_USER=YOUR_DB_USERNAME
-		DB_PASSWORD=YOUR_DB_PASSWORD
-		DB_HOST=YOUR_DB_HOST
-		DB_PORT=YOUR_DB_PORT(3306 FOR MYSQL)
-	</pre>
-	</li>
+	<li>adjust settings.py and docker-compose file with your database and image settings</li>
 	<li>Build and start the Docker containers:
 	<pre>docker-compose up --build</pre>
 	</li>
