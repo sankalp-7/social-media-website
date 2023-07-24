@@ -181,7 +181,10 @@ def comment(request):
 def search_user(request):
     user_object = User.objects.get(username=request.user.username)
     user_profile = Profile.objects.get(user=user_object)
-
+    check_follow_status=Follow.objects.filter(follower=request.user)
+    following_list=[]
+    for accounts in check_follow_status:
+        following_list.append(accounts.following.username)
     if request.method == 'POST':
         username = request.POST['search-username']
         username_object = User.objects.filter(username__icontains=username)
@@ -197,7 +200,8 @@ def search_user(request):
             username_profile_list.append(profile_lists)
         print(username_profile_list)
         username_profile_list = list(chain(*username_profile_list))
-    return render(request, 'djinsta/search.html', {'user_profile': user_profile, 'username_profile_list': username_profile_list,'username':username})
+    print(following_list)
+    return render(request, 'djinsta/search.html', {'user_profile': user_profile, 'username_profile_list': username_profile_list,'username':username,'following_list':following_list})
 
 
 
