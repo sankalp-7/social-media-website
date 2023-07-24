@@ -6,6 +6,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <title>Document</title>
     <style>
             * {
@@ -67,14 +70,14 @@ body {
 }
 
 .chat-header {
-  background-color: #bf00ff;
+  background-color: #ffffff;
   padding: 10px;
   display: flex;
   align-items: center;
 }
 
 .chat-header h2 {
-  color: #fff;
+  color: #302f2f;
   font-weight: bold;
   margin: 0;
 }
@@ -187,6 +190,7 @@ body {
         </div> -->
         <div class="chat-container">
           <div class="chat-header">
+            <a href="/rooms"><i class="fas fa-home"></i></a>&nbsp;&nbsp;&nbsp;
             <h2>{{room.name}}</h2>
           </div>
           <div class="chat-messages" id="chat-messages">
@@ -295,9 +299,7 @@ function displayMessage(message) {
     messageElement.textContent = message;
     chatMessages.appendChild(messageElement);
 }
-
-
-      </script>
+</script>
 
 </body>
 </html>
