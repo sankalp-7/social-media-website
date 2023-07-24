@@ -17,14 +17,31 @@
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/tailwind.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <style>
           body{
         background-color: white !important;
       }
+      
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px; 
+    margin-top: 18px;
+}
+
+.image {
+    width: 80px; 
+    height: 80px; 
+    object-fit: cover; 
+}
+
     </style>
 </head>
 
-<body>
+<body>      
             <form action="/search/" method="POST">
             {% csrf_token %}
             <header style="margin-top: -23px;">
@@ -42,9 +59,15 @@
                         </div>-->
 
                         <!-- <div class="header_search"> -->
-                                
-                                <input type="text" name="search-username" placeholder="Search for username..">&nbsp; &nbsp;
-                                <input type="submit" value="submit">
+                          
+                              
+                            <div style="display: flex; align-items: center;">
+                                <input type="text" name="search-username" placeholder="Search for username.." style="padding-right: 35px; border-radius: 4px 0 0 4px;  height: 38px; width: 300px;">
+                            
+                                <button type="submit" style="width: 40px; height: 38px; background-color: #ffffff; border: 0px solid #eceaea; border-left: none; border-radius: 0 4px 4px 0;">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
                             
                             <!-- <div class="icon-search">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -56,74 +79,10 @@
                         <!-- </div> -->
 
                     </div>
-                    <div class="right-side lg:pr-4">
-                        <!-- welcome user -->
-                        <a href="#" class="">
-                            Welcome <b name="" class="">{{user.username}}&nbsp; &nbsp; &nbsp;</b>
-                        </a>
-
-                         <!-- upload -->
-                        <a href="#"
-                            class="bg-pink-500 flex font-bold hidden hover:bg-pink-600 hover:text-white inline-block items-center lg:block max-h-10 mr-4 px-4 py-2 rounded shado text-white">
-                            <ion-icon name="add-circle" class="-mb-1
-                             mr-1 opacity-90 text-xl uilus-circle"></ion-icon> New Post
-                        </a>
-                         <!-- upload dropdown box -->
-                        <div uk-dropdown="pos: top-right;mode:click ; animation: uk-animation-slide-bottom-small" class="header_dropdown">
-    
-                            <!-- notivication header -->
-                            <div class="px-4 py-3 -mx-5 -mt-4 mb-5 border-b">
-                                <h4>Upload Pics or Videos</h4>
-                            </div>
-    
-                            <!-- notification contents -->
-                            <div class="flex justify-center flex-center text-center">
-    
-                                <div class="flex flex-col choose-upload text-center">
-                                   
-                                    <div class="bg-gray-100 border-2 border-dashed flex flex-col h-24 items-center justify-center relative w-full rounded-lg  ">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-12">
-                                            <path d="M5.5 13a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 13H11V9.413l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13H5.5z" />
-                                            <path d="M9 13h2v5a1 1 0 11-2 0v-5z" />
-                                        </svg>
-                                    </div>
-
-                                    <p class="my-3 leading-6"> Upload pics ..
-                                    </p>
-                                    <div uk-form-custom>
-                                        <input type="file">
-                                        <a href="#" class="button soft-warning small"> Choose pics</a>
-                                    </div>
-    
-                                    <a href="#" class="uk-text-muted mt-3 uk-link"
-                                        uk-toggle="target: .choose-upload ;  animation: uk-animation-slide-right-small, uk-animation-slide-left-medium; queued: true">
-                                        <!--Or Import Video--> </a>
-                                </div>
-    
-                                <div class="uk-flex uk-flex-column choose-upload" hidden>
-                                    <div class="mx-auto flex flex-col h-24 items-center justify-center relative w-full rounded-lg">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-12">
-                                            <path fill-rule="evenodd" d="M2 9.5A3.5 3.5 0 005.5 13H9v2.586l-1.293-1.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 15.586V13h2.5a4.5 4.5 0 10-.616-8.958 4.002 4.002 0 10-7.753 1.977A3.5 3.5 0 002 9.5zm9 3.5H9V8a1 1 0 012 0v5z" clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
-                                    <p class="my-3 leading-6"> Import videos from YouTube <br> Copy / Paste your video link here </p>
-                                    <form class="uk-grid-small" uk-grid>
-                                        <div class="uk-width-expand">
-                                            <input type="text" class="uk-input uk-form-small  bg-gray-200 " style="box-shadow:none" placeholder="Paste link">
-                                        </div>
-                                        <div class="uk-width-auto"> <button type="submit" class="button soft-warning -ml-2">
-                                                Import </button> </div>
-                                    </form>
-                                    <a href="#" class="uk-text-muted mt-3 uk-link"
-                                        uk-toggle="target: .choose-upload ; animation: uk-animation-slide-left-small, uk-animation-slide-right-medium; queued: true">
-                                        Or Upload Video </a>
-                                </div>
-    
-                            </div>
-                            <div class="px-4 py-3 -mx-5 -mb-4 mt-5 border-t text-sm">
-                                Your File size Must be Maxmium 999MB
-                            </div>
-                        </div>
+                    <div class="right-side">
+                        <h1 style="color: #555;">welcome {{request.user}}</h1>
+                        
+                    </div>
                         
                          <!-- Notification -->
 
@@ -325,26 +284,26 @@
                     </div>
                     <div class="col-md-9 col-md-pull-3">
                         <!-- <p class="search-results-count">About 94 700 000 (0.39 sec.) results</p> -->
-                        
                         {% for users in username_profile_list %}
-                        <section class="search-result-item" style="background-color: beige;">
-                            <a class="image-link" href="/profile/{{users.user}}"><img class="image" src="{{users.id_user|get_profile_img}}" class="bg-gray-200 rounded-full w-10 h-10">
-                            </a>
-                            <div class="search-result-item-body">
-                                <div class="row">
-                                    <div class="col-sm-9">
-                                        <h4 class="search-result-item-heading"><a href="/profile/{{users.user}}"><b>@{{users.user}}</b></a></h4>
-                                        <p class="info">{{users.location}}</p>
-                                        <p class="description">{{users.bio}}</p>
-                                    </div>
-                                    <!-- <div class="col-sm-3 text-align-center">
-                                        <p class="value3 mt-sm">$9, 700</p>
-                                        <p class="fs-mini text-muted">PER WEEK</p><a class="btn btn-primary btn-info btn-sm" href="#">Learn More</a>
-                                    </div> -->
-                                </div>
-                            </div>
-                        </section>
-                        {% endfor %}
+<section class="search-result-item" style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
+    <a class="image-link" href="/profile/{{users.user.id}}">
+        <div class="image-container">
+            <img class="image rounded-full" src="{{users.id_user|get_profile_img}}">
+        </div>
+    </a>
+    <div class="search-result-item-body">
+        <div class="row">
+            <div class="col-sm-9">
+                <h4 class="search-result-item-heading"><a href="/profile/{{users.user.id}}"><b>@{{users.user}}</b></a></h4>
+                <p class="info">{{users.location}}</p>
+                <p class="description">{{users.bio}}</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endfor %}
+
+
                         
                         <!-- <div class="text-align-center">
                             <ul class="pagination pagination-sm">
