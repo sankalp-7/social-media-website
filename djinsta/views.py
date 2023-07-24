@@ -7,11 +7,13 @@ from notifications.signals import notify
 from.models import Profile
 from post.models import Follow,Stream,Post,Comment
 from notifications.models import Notification
+from itertools import chain
 # Create your views here.
 
 @login_required(login_url='/signin')
 def home(request):
-    if request.method=='POST' and request.FILES:
+    if request.method=='POST' or request.FILES:
+        # username=request.POST['search-user']
         user_post=request.FILES['user_post']
         caption=request.POST['caption']
         obj=Post.objects.create(picture=user_post,caption=caption,user=request.user)
@@ -157,8 +159,7 @@ def delete_notification(request,pk):
     user=User.objects.get(pk=pk)
     qs=Notification.objects.filter(deleted=False,recipient=user).delete()
     return JsonResponse({'result':'success'})
-def search_user(request):
-    return render(request,'djinsta/search.html')
+
 
 def comment(request):
     print("coming?>>>>>>>>")
@@ -176,6 +177,28 @@ def comment(request):
             'comment_user': comment.user.username,
         }
     return JsonResponse(data)
+
+def search_user(request):
+    user_object = User.objects.get(username=request.user.username)
+    user_profile = Profile.objects.get(user=user_object)
+
+    if request.method == 'POST':
+        username = request.POST['search-username']
+        username_object = User.objects.filter(username__icontains=username)
+        print(f"hello {username}")
+        username_profile = []
+        username_profile_list = []
+
+        for users in username_object:
+            username_profile.append(users.id)
+
+        for ids in username_profile:
+            profile_lists = Profile.objects.filter(id_user=ids)
+            username_profile_list.append(profile_lists)
+        print(username_profile_list)
+        username_profile_list = list(chain(*username_profile_list))
+    return render(request, 'djinsta/search.html', {'user_profile': user_profile, 'username_profile_list': username_profile_list,'username':username})
+
 
 
 
