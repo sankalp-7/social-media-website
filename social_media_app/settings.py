@@ -101,10 +101,10 @@ CHANNEL_LAYERS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'djinstadb',
-        'USER': 'admin',
-        'PASSWORD': 'lq11pnwifi',
-        'HOST': 'djinstadb.cct3vfiws5ig.us-east-1.rds.amazonaws.com',
+        'NAME': 'your-db-name',
+        'USER': 'user',
+        'PASSWORD': 'your-db-password',
+        'HOST': 'your-db-host',
         'PORT': 3306
     }
 }
