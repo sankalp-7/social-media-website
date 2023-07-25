@@ -59,4 +59,18 @@
 <p>The web app can be deployed to a production server using a platform like Docker Swarm or Kubernetes. You will need to update the <code>docker-compose.yml</code> file with your production environment settings and configure your production server accordingly.</p>
 </body>
 </html>
+<h2>Signin Page</h2>
+![image](https://github.com/sankalp-7/Djinsta/assets/104098061/c2baecf4-aa29-4d25-952c-347d2637bc50)
+<h2>Home Page</h2>
+![image](https://github.com/sankalp-7/Djinsta/assets/104098061/d979d038-6593-4c0a-a3f9-0e155bd45563)
+<h2>Profile Page Of Users</h2>
+![image](https://github.com/sankalp-7/Djinsta/assets/104098061/9bce93fe-bba7-4995-84a4-5a7f5c804192)
+<h2>Group Chat Page</h2>
+![image](https://github.com/sankalp-7/Djinsta/assets/104098061/f6414d13-8ffc-4265-8983-d515ffefe45d)
+<h2>Real Time Notification System</h2>
+![image](https://github.com/sankalp-7/Djinsta/assets/104098061/a9868c0c-4bdc-4ef3-8395-cd3f2ec8170d)
+<h2>Account Search System</h2>
+![image](https://github.com/sankalp-7/Djinsta/assets/104098061/453e6606-1535-41e7-922b-f1385ce3fa85)
+
+
 
