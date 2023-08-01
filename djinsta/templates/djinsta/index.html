@@ -46,26 +46,33 @@
       body{
         background-color: white !important;
       }
-      .live_notify_badge{
-        color: red;
+      .header-links-item {
+    display: flex;
+    position: relative; /* Ensure the parent is a positioned element */
+    align-items: center; /* Center the content vertically */
+}
+
+/* CSS for the notification badge */
+.live_notify_badge {
     position: absolute;
-    top: 2px;
-    right: 140px;
-    display: inline-flex;
+    top: 0;
+    right: 0;
+    display: flex;
     justify-content: center;
     align-items: center;
-    min-width: 6px;
-    height: 11px;
-    padding: -37px 1px 1pc 10px;
-    border: 10px solid rgb(255, 185, 185);
-    border-radius: 160px;
-    font-size: 14px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    font-size: 12px;
     font-weight: 600;
     text-align: center;
+    background-color: red;
+    color: white;
     z-index: 1;
-    transition: transform 0.15s, background-color 0.5s;
+    pointer-events: none; /* Ensure it doesn't interfere with clicking the bell icon */
+    /* Add other styles as needed */
+}
 
-      }
       .trns-text {
   font-size: 4rem;
   margin: 0;
@@ -292,11 +299,7 @@
                         <div class="header_inner">
                             <div class="left-side">
                                 <!-- Logo -->
-                                <div id="logo" class=" uk-hidden@s">
-                                    <a href="/">
-                                        <!-- <b><h1 style="text-transform: uppercase;">Social Book</h1></b> -->
-                                    </a>
-                                </div>
+                                
         
                                 <!--<div class="triger" uk-toggle="target: #wrapper ; cls: sidebar-active">
                                     <i class="uil-bars"></i>
@@ -305,13 +308,12 @@
                                 <!-- <div class="header_search"> -->
                                   
                                     <div style="display: flex; align-items: center;">
-                                        <input type="text" name="search-username" placeholder="Search for username.." style="padding-right: 35px; border-radius: 4px 0 0 4px;  height: 38px; width: 300px;">
+                                        <input type="text" name="search-username" placeholder="Search for username.." class="usersearch" style="width: 109px;">
                                     
                                         <button type="submit" style="width: 40px; height: 38px; background-color: #ffffff; border: 0px solid #eceaea; border-left: none; border-radius: 0 4px 4px 0;">
                                             <i class="fas fa-search"></i>
                                         </button>
                                     </div>
-                                    
                                    
                                     </form>
                                 
@@ -327,11 +329,16 @@
                             </div>
                     <div class="right-side lg:pr-4">
                          <!-- upload -->
-                        <a href="#"
-                            class="bg-pink-500 flex font-bold hidden hover:bg-pink-600 hover:text-white inline-block items-center lg:block max-h-10 mr-4 px-4 py-2 rounded shado text-white">
-                            <ion-icon name="add-circle" class="-mb-1
-                             mr-1 opacity-90 text-xl uilus-circle"></ion-icon> Upload Pics / Videos
-                        </a>
+                        <a href="#" class="bg-pink-500 flex font-bold hover:bg-pink-600 hover:text-white inline-block items-center max-h-10 px-4 py-2 rounded shadow text-white upld">
+                                <ion-icon name="add-circle" class="-mb-1 mr-1 opacity-90 text-xl uilus-circle"></ion-icon> Upload
+                            </a>
+                            <style>
+                                @media (max-width: 600px) {
+                                    .upld{
+                                        width: 80px;
+                                    }
+                                }
+                            </style>
                          <!-- upload dropdown box -->
                         <div uk-dropdown="pos: top-right;mode:click ; animation: uk-animation-slide-bottom-small" class="header_dropdown">
 
@@ -397,19 +404,17 @@
                                 </div>
 
                             </div>
-                            <div class="px-4 py-3 -mx-5 -mb-4 mt-5 border-t text-sm">
-                                Your Video size Must be Maxmium 999MB
-                            </div>
+                            
                         </div>
 
                          <!-- Notification -->
 
-                        <a href="#" class="header-links-item">
+                      <a href="#" class="header-links-item">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none"><path d="M12 22a2.02 2.02 0 0 1-2.01-2h4a2.02 2.02 0 0 1-.15.78a2.042 2.042 0 0 1-1.44 1.18h-.047A1.922 1.922 0 0 1 12 22zm8-3H4v-2l2-1v-5.5a8.065 8.065 0 0 1 .924-4.06A4.654 4.654 0 0 1 10 4.18V2h4v2.18c2.579.614 4 2.858 4 6.32V16l2 1v2z" fill="currentColor"/></g></svg>
-                        </a>
-<span class='live_notify_badge'>
+                            <span class='live_notify_badge'>
 
-                </span>
+                            </span>
+                        </a>
 
 
                         <div uk-drop="mode: click;offset: 4" class="header_dropdown">
