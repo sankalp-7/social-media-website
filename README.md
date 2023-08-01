@@ -71,6 +71,8 @@
 ![image](https://github.com/sankalp-7/Djinsta/assets/104098061/a9868c0c-4bdc-4ef3-8395-cd3f2ec8170d)
 <h2>Account Search System</h2>
 ![image](https://github.com/sankalp-7/Djinsta/assets/104098061/453e6606-1535-41e7-922b-f1385ce3fa85)
+<h2>Mobile Home Page View</h2>
+![image](https://github.com/sankalp-7/Djinsta/assets/104098061/82611592-e913-4434-b2c8-0cf8614e6432)
 
 
 
