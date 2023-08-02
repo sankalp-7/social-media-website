@@ -17,10 +17,10 @@ services:
   db:
     image: mysql:5.7
     environment:
-      MYSQL_DATABASE: 'djinstadb'
-      MYSQL_USER: 'admin'
-      MYSQL_PASSWORD: 'lq11pnwifi'
-      MYSQL_ROOT_PASSWORD: 'lq11pnwifi'
+      MYSQL_DATABASE: ''
+      MYSQL_USER: ''
+      MYSQL_PASSWORD: ''
+      MYSQL_ROOT_PASSWORD: ''
     ports:
       - 3307:3306
     volumes:
