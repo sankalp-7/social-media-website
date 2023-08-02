@@ -3,7 +3,7 @@
 <head>
 </head>
 <body>
-	<h1>Django Social Media Web App -- Djinsta🔥</h1>
+	<h1>Django Social Media Web App -- Djinsta</h1>
 <p>This is a Django-based social media web app that uses Docker for containerization. The app allows users to create posts, like and comment on posts,chat and follow other users.</p>
 
 <h2>Requirements</h2>
