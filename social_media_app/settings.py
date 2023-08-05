@@ -104,7 +104,7 @@ DATABASES = {
         'NAME': '',
         'USER': '',
         'PASSWORD': '',
-        'HOST': '',
+        'HOST': 'aws rds host',
         'PORT': 3306
     }
 }
