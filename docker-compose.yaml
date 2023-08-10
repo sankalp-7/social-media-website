@@ -8,7 +8,7 @@ services:
       - .:/djinsta
     ports:
       - 8000:8000
-    image: public.ecr.aws/s5g6b4u3/socialmediaapp:latest
+    image: //image repo//
     container_name: django_container
     command: python manage.py runserver 0.0.0.0:8000
     depends_on:
@@ -17,10 +17,10 @@ services:
   db:
     image: mysql:5.7
     environment:
-      MYSQL_DATABASE: 'djinstadb'
-      MYSQL_USER: 'admin'
-      MYSQL_PASSWORD: 'lq11pnwifi'
-      MYSQL_ROOT_PASSWORD: 'lq11pnwifi'
+      MYSQL_DATABASE: ''
+      MYSQL_USER: ''
+      MYSQL_PASSWORD: ''
+      MYSQL_ROOT_PASSWORD: ''
     ports:
       - 3307:3306
     volumes:
