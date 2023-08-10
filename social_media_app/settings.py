@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-yw_t4h8t8jo=r*oty4c6(-nigq!@w9--yu_g%en(l_xt12isdi'
+SECRET_KEY = '//'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -101,10 +101,10 @@ CHANNEL_LAYERS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'djinstadb',
-        'USER': 'admin',
-        'PASSWORD': 'lq11pnwifi',
-        'HOST': 'djinstadb.cct3vfiws5ig.us-east-1.rds.amazonaws.com',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
         'PORT': 3306
     }
 }
