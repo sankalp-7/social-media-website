@@ -124,21 +124,26 @@ def follow(request,pk):
     notify.send(follower, recipient=following.user, verb='Follow Notification', description='followed you')
     follow_obj=Follow.objects.create(follower=follower,following=following.user)
     follow_obj.save()
-    return redirect('/')
+    response_data = {'success': True, 'message': 'User followed successfully.','fc':following.followers}
+    return JsonResponse(response_data)
 @login_required(login_url='/signin')
-def unfollow(request,pk):
-    follower=request.user
-    following=Profile.objects.get(id_user=pk)
+@login_required(login_url='/signin')
+def unfollow(request, pk):
+    follower = request.user
+    following = Profile.objects.get(id_user=pk)
 
-    if following.followers==0:
-        following.followers=0
+    if following.followers > 0:
+        following.followers -= 1
+        following.save()
+
+        inst = Follow.objects.filter(follower=follower, following=following.user).first()
+        if inst:
+            inst.delete()
+
+        response_data = {'success': True, 'message': 'User unfollowed successfully.', 'fc': following.followers}
+        return JsonResponse(response_data)
     else:
-        following.followers-=1
-    following.save()
-
-    inst=Follow.objects.get(follower=follower,following=following.user)
-    inst.delete()
-    return redirect('/')
+        return JsonResponse({'success': False, 'message': 'User already has 0 followers.', 'fc': following.followers})
 def like_post(request,pid):
     post_obj=Post.objects.get(id=pid)
     post_obj.likes+=1
