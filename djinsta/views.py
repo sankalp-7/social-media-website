@@ -20,6 +20,8 @@ def home(request):
         print("POST CREATED")
         print(obj)
     posts=Stream.objects.filter(user=request.user)
+    #reversing posts object list so that the most recently uploaded post appears first
+    posts=posts[::-1]
     users=Profile.objects.all().exclude(user=request.user)
     try:
         user_profile_img=Profile.objects.get(user=request.user)
