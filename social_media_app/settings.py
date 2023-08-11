@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '//'
+SECRET_KEY = 'django-insecure-yw_t4h8t8jo=r*oty4c6(-nigq!@w9--yu_g%en(l_xt12isdi'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -63,7 +63,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
 ROOT_URLCONF = 'social_media_app.urls'
 
 TEMPLATES = [
@@ -101,10 +101,10 @@ CHANNEL_LAYERS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': '',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
+        'NAME': 'djinstadb',
+        'USER': 'admin',
+        'PASSWORD': 'lq11pnwifi',
+        'HOST': 'djinstadb.cct3vfiws5ig.us-east-1.rds.amazonaws.com',
         'PORT': 3306
     }
 }
