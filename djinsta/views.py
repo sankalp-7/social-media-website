@@ -20,8 +20,6 @@ def home(request):
         print("POST CREATED")
         print(obj)
     posts=Stream.objects.filter(user=request.user)
-    #reversing posts object list so that the most recently uploaded post appears first
-    posts=posts[::-1]
     users=Profile.objects.all().exclude(user=request.user)
     try:
         user_profile_img=Profile.objects.get(user=request.user)
@@ -83,10 +81,10 @@ def logout(request):
 def settings(request):
     print("settings loading/......")
     curr_user=Profile.objects.get(user=request.user)
+    uploaded_image = request.FILES.get('image')
     if request.method=='POST':
-        if request.FILES['image']==None:
+        if uploaded_image is None:
             print("default image loaded")
-            curr_user.profile_img=curr_user.profile_img
             curr_user.bio=request.POST['bio']
             curr_user.location=request.POST['location']
             bool=request.POST['checkprivacy']
@@ -146,6 +144,7 @@ def unfollow(request, pk):
         return JsonResponse(response_data)
     else:
         return JsonResponse({'success': False, 'message': 'User already has 0 followers.', 'fc': following.followers})
+
 def like_post(request,pid):
     post_obj=Post.objects.get(id=pid)
     post_obj.likes+=1
