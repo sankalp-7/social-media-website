@@ -491,7 +491,7 @@
                     {% if posts %}
                     {% for post in posts %}
                         <!-- post 1-->
-                        <div class="bg-white shadow rounded-md  -mx-2 lg:mx-0">
+                        <div class="bg-white shadow rounded-md  -mx-2 lg:mx-0" id="post-{{forloop.counter}}">
 
                             <!-- post header-->
                             <div class="flex justify-between items-center px-4 py-3">
@@ -613,7 +613,7 @@
                         </div>
                     {% endfor %}
                     {% else %}
-                    <p class="trns-text">Follow Others To View Their Posts!</p>
+                    <p class="trns-text" id="text-1">Follow Others To View Their Posts!</p>
                     {% endif %}
 
                         
@@ -844,7 +844,7 @@
 
                             <div class="divide-gray-300 divide-gray-50 divide-opacity-50 divide-y px-4 ">
                                 {% for i in users %}
-                                <div class="flex items-center justify-between py-3">
+                                <div class="flex items-center justify-between py-3" id="card-{{forloop.counter}}">
                                     <div class="flex flex-1 items-center space-x-4">
                                         <a href="profile/{{i.id_user}}">
                                             <img src="{{i.profile_img.url}}" class="bg-gray-200 rounded-full w-10 h-10">
@@ -928,6 +928,49 @@
     <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
 {% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge' %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+    const posts=[...document.querySelectorAll('[id^="post-"]')]
+
+    gsap.from(posts, {
+        opacity:0,
+        y:50,
+        duration:1,
+        stagger:0.2,
+        delay:0.2,
+        ease:'power3.out'
+    })
+    gsap.to()
+    gsap.fromTo()
+
+</script>
+<script>
+    const text=[...document.querySelectorAll('[id^="text-"]')]
+    gsap.from(text, {
+        opacity:0,
+        y:-50,
+        duration:1,
+        delay:0.2,
+        ease:'power3.out'
+    })
+    gsap.to()
+    gsap.fromTo()
+</script>
+<script>
+    const cards=[...document.querySelectorAll('[id^="card-"]')]
+
+    gsap.from(cards, {
+        opacity:0,
+        y:50,
+        duration:1,
+        stagger:0.2,
+        delay:0.2,
+        ease:'Expo.easeInOut'
+    })
+    gsap.to()
+    gsap.fromTo()
+
+</script>
 <script>
     $(document).ready(function() {
         $(".follow-button, .unfollow-button").on("click", function(e) {
