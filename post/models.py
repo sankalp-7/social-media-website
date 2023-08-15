@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 from django.utils.text import slugify
 from django.urls import reverse
 import uuid
@@ -51,6 +52,20 @@ class Post(models.Model):
 class Follow(models.Model):
 	follower = models.ForeignKey(User,on_delete=models.CASCADE, null=True, related_name='follower')
 	following = models.ForeignKey(User,on_delete=models.CASCADE, null=True, related_name='following')
+	
+@receiver(post_save, sender=Follow)
+def add_followed_posts_to_stream(sender, instance, created, **kwargs):
+	if created:
+		follower = instance.follower
+		following = instance.following
+		followed_posts = Post.objects.filter(user=following)
+		for post in followed_posts:
+			Stream.objects.create(
+				post=post,
+				user=follower,
+				following=following,
+				date=post.posted,
+			)
 
 class Request(models.Model):
     pass
