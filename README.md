@@ -60,7 +60,9 @@
 </body>
 </html>
 <h2>Signin Page</h2>
-![image](https://github.com/sankalp-7/Djinsta/assets/104098061/af76d441-f1cb-4033-b9aa-750bf55958b5)
+# Signin Page
+![image](https://github.com/sankalp-7/Djinsta/assets/104098061/51a84670-35ed-4b9b-a086-abe7ec1fc1aa)
+
 ![image](https://github.com/sankalp-7/Djinsta/assets/104098061/c2baecf4-aa29-4d25-952c-347d2637bc50)
 <h2>Home Page</h2>
 ![image](https://github.com/sankalp-7/Djinsta/assets/104098061/d979d038-6593-4c0a-a3f9-0e155bd45563)
