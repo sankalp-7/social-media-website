@@ -4,14 +4,8 @@
 </head>
 <body>
 	<h1>Django Social Media Web App -- Djinsta</h1>
-<p>This is a Django-based social media web app that uses Docker for containerization. The app allows users to create posts, like and comment on posts,chat and follow other users.</p>
-
-<h2>Requirements</h2>
-
-<ul>
-	<li>Docker</li>
-	<li>Docker Compose</li>
-</ul>
+<p>This is a Django-based social media web app that has key functionalities like posting, following,
+commenting, like, chat, and notifications..</p>
 
 <h2>Installation and Setup</h2>
 
@@ -27,21 +21,31 @@
 		pip install -r requirements.txt
 	</pre>
 	</li>
-	<li>adjust settings.py and docker-compose file with your database and image settings</li>
-	<li>Build and start the Docker containers:
-	<pre>docker-compose up --build</pre>
-	</li>
-	<li>Create the initial database tables and load the initial data:
+	<li>
 	<pre>
-		docker-compose exec web python manage.py migrate
-		docker-compose exec web python manage.py loaddata initial_data.json
+		python manage.py makemigrations
 	</pre>
 	</li>
-	<li>Create a superuser account:
-	<pre>docker-compose exec web python manage.py createsuperuser</pre>
+	<li>
+	<pre>
+		python manage.py migrate
+	</pre>
 	</li>
 	<li>
-		<pre>Access the web app at <a href="http://localhost:8000/">http://localhost:8000/</a> and log in with your superuser account.</pre></li>
+	<pre>
+		python manage.py runserver
+	</pre>
+	</li>
+</ol>
+
+<h3>OR IF YOU HAVE DOCKER</h3>
+
+<ol>
+	<li>
+		<pre>
+			docker-compose up
+		</pre>
+	</li>
 </ol>
 
 <h2>Usage</h2>
