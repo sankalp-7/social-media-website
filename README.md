@@ -10,35 +10,34 @@ commenting, like, chat, and notifications..</p>
 <h2>Installation and Setup</h2>
 
 <ol>
-	<li>Clone the repository:
+	<li>Clone the repository: 🌀
 	<pre>
 		git clone https://github.com/sankalp-7/Djinsta.git
-		cd social_media_app
 	</pre>
 	</li>
-	<li>Install Requirements
+	<li>Install Requirements: ⬇️
 	<pre>
 		pip install -r requirements.txt
 	</pre>
 	</li>
-	<li>
+	<li>Make Migrations: 🔖
 	<pre>
 		python manage.py makemigrations
 	</pre>
 	</li>
-	<li>
+	<li>Migrate DB changes 🔄
 	<pre>
 		python manage.py migrate
 	</pre>
 	</li>
-	<li>
+	<li>Runserver and access at localhost:8000 👍
 	<pre>
 		python manage.py runserver
 	</pre>
 	</li>
 </ol>
 
-<h3>OR IF YOU HAVE DOCKER</h3>
+<h3>OR IF YOU HAVE DOCKER 🗳️</h3>
 
 <ol>
 	<li>
@@ -58,9 +57,6 @@ commenting, like, chat, and notifications..</p>
 <pre>docker-compose up --build</pre>
 <p>You can then access the development server at <a href="http://localhost:8000/">http://localhost:8000/</a>.</p>
 
-<h2>Deployment</h2>
-
-<p>The web app can be deployed to a production server using a platform like Docker Swarm or Kubernetes. You will need to update the <code>docker-compose.yml</code> file with your production environment settings and configure your production server accordingly.</p>
 </body>
 </html>
 <h2>Signin Page</h2>
