@@ -38,6 +38,7 @@ services:
     container_name: nginx1
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./staticfiles:/etc/nginx/staticfiles
     ports:
       - 80:80
     depends_on:
