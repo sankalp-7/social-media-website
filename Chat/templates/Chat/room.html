@@ -162,6 +162,7 @@ body {
     width: 31px;
     border-radius: 39px;
     height: 29px;
+    
 }
 .total-msg-div{
   display: flex;
@@ -213,10 +214,12 @@ body {
       </div>
       {{ room.slug|json_script:"json-roomname" }}
       {{ request.user.username|json_script:"json-username" }}
+      {{ request.user.id|get_profile_img|json_script:"json-pimgurl" }}
 
       <script>
           const roomName = JSON.parse(document.getElementById('json-roomname').textContent);
           const userName = JSON.parse(document.getElementById('json-username').textContent);
+          const profileimg = JSON.parse(document.getElementById('json-pimgurl').textContent);
           const chatSocket = new WebSocket(
               'ws://'
               + window.location.host
@@ -234,10 +237,27 @@ body {
 
               if (data.message) {
 
-                  document.querySelector('#chat-messages').innerHTML += ('<div class="msg-div">'+'<b>' + data.username + '</b>: ' + data.message +'</div>'+ '<br>');
+                const imgElement = document.createElement('img');
+        
+        
+                imgElement.src = data.profileimg;
+                imgElement.alt = '';
+                imgElement.width = '10px';
+                imgElement.classList.add('user-profile-img');
+
+        
+                const msgDiv = document.createElement('div');
+                msgDiv.classList.add('msg-div');
+                msgDiv.innerHTML = '<b>' + data.username + '</b>: ' + data.message;
+
+        
+                document.querySelector('#chat-messages').appendChild(imgElement);
+                document.querySelector('#chat-messages').appendChild(msgDiv);
+                document.querySelector('#chat-messages').appendChild(document.createElement('br'));
 
                   
-              } else {
+              } 
+              else {
                   alert('The message was empty!')
               }
 
@@ -261,7 +281,9 @@ body {
               chatSocket.send(JSON.stringify({
                   'message': message,
                   'username': userName,
-                  'room': roomName
+                  'room': roomName,
+                  'profileimg':profileimg
+
               }));
 
               messageInputDom.value = '';
@@ -280,6 +302,7 @@ body {
           // Add this below the function to trigger the scroll on load.
           scrollToBottom();
       </script>
+
       <script>
         const chatMessages = document.querySelector('.chat-messages');
 const chatInput = document.querySelector('.chat-input input');
@@ -299,7 +322,7 @@ function displayMessage(message) {
     messageElement.textContent = message;
     chatMessages.appendChild(messageElement);
 }
-</script>
+      </script>
 
 </body>
 </html>
