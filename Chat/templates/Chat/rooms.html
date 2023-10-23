@@ -1,251 +1,99 @@
 {% load static %}
+{% load helper %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Rooms</title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-	<style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rooms</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'assets/css/icons.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/uikit.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/tailwind.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+   <style>
+           body {
+            background-color: #f8f9fa; /* Light gray background */
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
 
+        .navbar {
+            background-color: #bf00ff; /* Dark gray navbar background */
+            padding: 10px;
+            text-align: center;
+            color: #ffffff; /* White text color */
+            display: flex;
+            justify-content: start;
+        }
 
-		.container {
-			padding: 50px;
-			background-color: #ffffff;
-			min-height: 100vh;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+        .navbar h1 {
+            font-size: 24px;
+            margin: 0;
+        }
 
-		}
+        .room-card {
+        transition: transform 0.2s ease-in-out;
+        animation:infinite;
+    }
 
-		.room-container {
-			display: flex;
-      flex-direction: row;
-			flex-wrap: wrap;
-			margin-top: 30px;
-		}
+    .room-card:hover {
+        transform: scale(1.01); /* Adjust the scale factor as needed */
+    }
+     
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #bf00ff;
+        padding: 10px;
+        color: #ffffff;
+        position: relative;
+    }
 
-		.room-card {
-			width: 100%;
-			margin-bottom: 20px;
-		}
-
-		@media screen and (min-width: 768px) {
-			.room-card {
-				width: calc(50% - 20px);
-				margin-right: 20px;
-			}
-
-			.room-card:nth-child(2n) {
-				margin-right: 0;
-			}
-
-		}
-		@media  screen and (max-width:768px) {
-			.room-container{
-				flex-direction: column;
-				flex-wrap: nowrap;
-			}
-		}
-
-		.card-body {
-			padding: 20px;
-			background-color: #ffffff;
-			border-radius: 10px;
-			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-			transition: all 0.3s ease;
-		}
-
-		.card-body:hover {
-			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-			transform: translateY(-5px);
-		}
-
-		.room-title {
-			font-size: 24px;
-			font-weight: 600;
-			margin-bottom: 15px;
-		}
-
-		.room-join {
-			display: inline-block;
-			padding: 10px 20px;
-			background-color: #bf00ff;
-			color: #ffffff;
-			border-radius: 30px;
-			text-transform: uppercase;
-			font-weight: 600;
-            font-style: italic;
-			transition: all 0.3s ease;
-		}
-
-		.room-join:hover {
-			background-color: #c630f8;
-		}
-		a {
-  text-decoration: none;
-  color: inherit;
-}
-         @import url(https://fonts.googleapis.com/css?family=Lato:400,600,700);
-.snip1527 {
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-  color: #ffffff;
-  float: left;
-  font-family: 'Lato', Arial, sans-serif;
-  font-size: 16px;
-  margin: 10px 1%;
-  max-width: 310px;
-  min-width: 250px;
-  overflow: hidden;
-  position: relative;
-  text-align: left;
-  width: 100%;
-  height: 254px; /* adjust as needed */
-  padding-bottom: 10px; /* adjust as needed */
-}
-
-.snip1527 * {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  -webkit-transition: all 0.25s ease;
-  transition: all 0.25s ease;
-}
-
-.snip1527 img {
-  max-width: 100%;
-  vertical-align: top;
-  position: relative;
-}
-
-.snip1527 figcaption {
-  padding: 25px 20px 25px;
-  position: absolute;
-  bottom: 0;
-  z-index: 1;
-  left: 0;
-  right: 0;
-}
-
-.snip1527 figcaption:before {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #700877;
-  content: '';
-  background: -moz-linear-gradient(90deg, #700877 0%, #ff2759 100%, #ff2759 100%);
-  background: -webkit-linear-gradient(90deg, #700877 0%, #ff2759 100%, #ff2759 100%);
-  background: linear-gradient(90deg, #700877 0%, #ff2759 100%, #ff2759 100%);
-  opacity: 0.8;
-  z-index: -1;
-}
-
-.snip1527 .date {
-  background-color: #fff;
-  border-radius: 50%;
-  color: #700877;
-  font-size: 18px;
-  font-weight: 700;
-  min-height: 48px;
-  min-width: 48px;
-  padding: 10px 0;
-  position: absolute;
-  right: 15px;
-  text-align: center;
-  text-transform: uppercase;
-  top: -25px;
-}
-
-.snip1527 .date span {
-  display: block;
-  line-height: 14px;
-}
-
-.snip1527 .date .month {
-  font-size: 11px;
-}
-
-.snip1527 h3,
-.snip1527 p {
-  margin: 0;
-  padding: 0;
-}
-
-.snip1527 h3 {
-  display: inline-block;
-  font-weight: 700;
-  letter-spacing: -0.4px;
-  margin-bottom: 5px;
-}
-
-.snip1527 p {
-  font-size: 0.8em;
-  line-height: 1.6em;
-  margin-bottom: 0px;
-}
-
-.snip1527 a {
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  position: absolute;
-  z-index: 1;
-}
-
-.snip1527:hover img,
-.snip1527.hover img {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
-}
-
-
-/* Demo purposes only */
-
-body {
-  background-color: #212121;
-}
-.btn-join{
-  width: 38px;
-  border-radius: 40px;
-  background-color: #700877;
-  border:0;
-  color:white;
-  font-weight: bold;
-}
-.btn-join:hover{
-  text-decoration: underline;
-}
-.snip1527 h3 {
-  display: block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.snip1527 a.btn-join {
-  display: block;
-  margin-top: 10px; /* add some space between h3 and button */
-}
-	</style>
+    
+   </style>
 </head>
-<body>
-	<div class="container">
-		<h4 class="text-2xl leading-none text-gray-900 tracking-tight mt-3"><a href="/">Home </a> / Rooms for {{user.username}} </h4>
-		<hr>
-		<br>
-		<div class="room-container">
-    {% for room in rooms %}
-    <a href="{% url 'room' room.slug %}" style="margin-right: 15px;">
-    <figure class="snip1527">
-      <div class="image" style="background-color: #f57474;"></div>
-      <figcaption style="background-color: rgba(0, 0, 0, 0.3); padding: 20px; height: 100px;" style="display: block;">
-        <h6 style="color: #fff;text-align: center;">{{room.name}}</h6>
-      </figcaption>
-    </figure>
-    </a>
-    {% endfor %}
-  </div>
-	</div>
+
+<body style="background-color: white;">
+    <div class="navbar">
+        <h1 style="color: white;"><a href="/" style="color: white;">Home</a> / Rooms for {{ user.username }} </h1>
+        
+    </div>
+    <hr>
+   
+    <div class="divide-gray-300 divide-gray-50 divide-opacity-50 divide-y px-4">
+        {% for room in rooms %}
+            <div class="flex items-center justify-between py-3 room-card" id="card-{{ forloop.counter }}">
+                <div class="flex flex-1 items-center space-x-4">
+                    <a href="{% url 'room' room.room.slug %}">
+                        <img src="/media/{{ room.room.room_img }}" class="bg-gray-200 rounded-full w-10 h-10">
+                    </a>
+                    <div class="flex flex-col">
+                        <a href="{% url 'room' room.room.slug %}" style="color: grey;">
+                            <span class="block capitalize font-semibold" style="margin-bottom: 0;">{{ room.room.name }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            {% if room.room.slug|getusr|slice:"0:-1" == user.username %}
+                                <span>You:</span>
+                                <span>{{ room.room.slug|getlastmsg }}</span>
+                                <br>
+                                <span style="font-size: 10px;">{{ room.latest_message.date_added }}</span>
+                            {% else %}
+                                <span>{{ room.room.slug|getusr }}</span>
+                                <span>{{ room.latest_message.content }}</span>
+                                <br>
+                                <span style="font-size: 10px;">{{ room.latest_message.date_added }}</span>
+                            {% endif %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
 </body>
 </html>
