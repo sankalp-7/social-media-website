@@ -6,6 +6,7 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from.models import Room, Message
 from django.core.cache import cache
+
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         print("connecting?????")
@@ -66,6 +67,5 @@ class ChatConsumer(AsyncWebsocketConsumer):
     def save_message(self, username, room, message):
         user = User.objects.get(username=username)
         room = Room.objects.get(slug=room)
-
         Message.objects.create(user=user, room=room, content=message)
     
