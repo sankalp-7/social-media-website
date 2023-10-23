@@ -13,6 +13,7 @@ urlpatterns=[
     path('follow/<int:pk>',follow,name='follow'),
     path('unfollow/<int:pk>',unfollow,name='unfollow'),
     path('like/<str:pid>',like_post,name='likepost'),
+    path('dislike/<str:pid>',dislike_post,name='dislikepost'),
     path('profile/<int:pk>',profile,name='profile'),
     path('deleteN/<int:pk>',delete_notification,name='deleteN'),
     path('search/',search_user,name='search_user'),
