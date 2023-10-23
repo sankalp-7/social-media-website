@@ -1,5 +1,6 @@
 {% load static %}
 {% load helper %}
+{% load likehelper %}
 {% load notifications_tags %}
 <!DOCTYPE html>
 <html lang="en">
@@ -20,8 +21,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <style>
+   
     .btn-del {
     --tw-bg-opacity: 1;
     background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
@@ -288,14 +291,54 @@
     text-decoration: none;
 }
     </style>
+    <style>
+        /* styles.css */
+    
+    /* ... (your existing styles) */
+    
+    /* Style for the like button */
+    .like-btn {
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    /* Style for the heart icon */
+    .like-btn .heart-icon {
+      fill: none;
+      stroke: black;
+      stroke-width: 2;
+      transition: fill 0.3s ease;
+    }
+    
+    .like-btn.liked .heart-icon {
+      fill: red;
+      stroke: none;
+    }
+
+
+
+    .fa-heart-o {
+            color: red;
+            cursor: pointer;
+    }
+
+    .fa-heart {
+        color: red;
+        cursor: pointer;
+    }
+
+    
+    </style>
 </head>
 
 <body>
-
+            <!-- Navbar -->
             <header>
                 <form action="/search/" method="POST">
                     {% csrf_token %}
-                    <header style="margin-top: 10px;">
+                    <header style="position: fixed;">
                         <div class="header_inner">
                             <div class="left-side">
                                 <!-- Logo -->
@@ -374,7 +417,7 @@
 
                                 </div>
 
-                              
+                                
                             </div>
 
                             <div class="uk-flex uk-flex-column choose-upload" hidden>
@@ -478,6 +521,8 @@
                 
             </header>
 
+            <!-- Main Page -->
+
             <div class="container m-auto">
 
                 <!--<h1 class="lg:text-2xl text-lg font-extrabold leading-none text-gray-900 tracking-tight mb-5"> Feed </h1>--->
@@ -489,7 +534,7 @@
                     {% if posts %}
                     {% for post in posts %}
                         <!-- post 1-->
-                        <div class="bg-white shadow rounded-md  -mx-2 lg:mx-0">
+                        <div class="bg-white shadow rounded-md  -mx-2 lg:mx-0" id="post-{{forloop.counter}}">
 
                             <!-- post header-->
                             <div class="flex justify-between items-center px-4 py-3">
@@ -522,34 +567,31 @@
                             <div class="py-3 px-4 space-y-3">
 
                                 <div class="flex space-x-4 lg:font-bold">
-                                    <a href="#" class="flex items-center space-x-2 like-btn">
-                                        <div class="p-2 rounded-full text-black">
-                                               <a href="like/{{post.post.id}}">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="25" height="25" class="">
-                                                <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
-                                                </svg>
-                                               </a>
-                                        </div>
-
-                                    </a>
-                                 
-                                        <div class="p-2 rounded-full text-black">
+                                    {% if post.post.id|is_liked:user.id %}
+                                    <span class="like-btn liked" data-post-id="{{ post.post.id }}" style="padding: 2%; margin-top: 3px;">
+                                        <i class="fa-solid fa-heart fa-lg"></i>
+                                    </span>
+                                    {% else %}
+                                    <span class="like-btn" data-post-id="{{ post.post.id }}" style="padding: 2%; margin-top: 3px;">
+                                        <i class="fa-regular fa-heart fa-lg"></i>
+                                    </span>
+                                    {% endif %}
+                                    </span>
+                                        <div class="p-2 rounded-full text-black" style="margin-top: 5px;margin-left: 0px;">
                                             <button  onclick="commentfocus('{{post.post.id}}')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="25" height="25" class="">
                                                 <path fill-rule="evenodd" d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z" clip-rule="evenodd" />
                                             </svg></button>
-                                    
+                                            
                                         </div>
 
-                                
-                                   
                                 </div>
                                 <div class="flex items-center space-x-3">
                                    
                                     
-                                    <div class="">
-                                        Liked By <strong> {{post.post.likes}} </strong><strong> Users</strong>
+                                    <div class="post-like-count-for-{{post.post.id}}">
+                                        Liked By <strong class="like-count"> {{post.post.likes}}</strong>
+                                        <strong>Users</strong>
                                     </div>
-                                    
                                 </div>
 
                                 <div class="border-t pt-4 space-y-4 ">
@@ -611,9 +653,10 @@
                         </div>
                     {% endfor %}
                     {% else %}
-                    <p class="trns-text" id="text-1">Follow Others To View Their Posts!.</p>
-			    <br>
-                    <p class="trns-text"> Refresh Page After Following..</p>
+                    <p class="trns-text" id="text-1">Follow Others To View Their Posts!</p>
+                    <br>
+                    <p class="trns-text" > Refresh Page After Following..</p>
+                
                     {% endif %}
 
                         
@@ -841,7 +884,7 @@
                                 <h2 class="font-semibold text-lg" style="text-align: center;">Users You Can Follow</h2>
                                 
                             </div>
-
+                            
                             <div class="divide-gray-300 divide-gray-50 divide-opacity-50 divide-y px-4 ">
                                 {% for i in users %}
                                 <div class="flex items-center justify-between py-3" id="card-{{forloop.counter}}">
@@ -859,25 +902,13 @@
 
                                         </div>
                                     </div>
-<!--                                            {% if i.user.username in following_list %}-->
-<!--                                          <a href="unfollow/{{i.id_user}}" class="border border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600 "> Unfollow </a>-->
 
-<!--                                            {% else %}-->
-
-
-<!--                                         <a href="follow/{{i.id_user}}" class="border border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600 "> Follow </a>-->
-<!--                                            {% endif %}-->
-
-{% if i.user.username in following_list %}
-<a href="#" data-action="unfollow" data-userid="{{i.id_user}}" data-followcount="{{i.followers}}" class="border border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600 unfollow-button"> Unfollow </a>
-{% else %}
- <a href="#" data-action="follow" data-userid="{{i.id_user}}" data-followcount="{{i.followers}}" class="border border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600 follow-button"> Follow </a>
-{% endif %}
-
-
-
-
-
+            {% if i.user.username in following_list %}
+                <a href="#" data-action="unfollow" data-userid="{{i.id_user}}" data-followcount="{{i.followers}}" class="border border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600 unfollow-button"> Unfollow </a>
+            {% else %}
+                <a href="#" data-action="follow" data-userid="{{i.id_user}}" data-followcount="{{i.followers}}" class="border border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600 follow-button"> Follow </a>
+            {% endif %}
+                                                                       
                                 </div>
                                 {% endfor %}
                                 <div id="toast">
@@ -929,7 +960,87 @@
 {% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge' %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+     $(document).ready(function () {
+    $(".like-btn").click(function () {
+      const likeButton = $(this);
+      const postId = likeButton.data("post-id");
+      if (likeButton.hasClass("liked")) {
+          likeButton.html('<i class="fa-regular fa-heart fa-lg"></i>');
+          likeButton.removeClass("liked");
+        } else {
+          likeButton.html('<i class="fa-solid fa-heart fa-lg"></i>');
+          likeButton.addClass("liked");
+        }
+    //updating like count
+      const likeCountElement = $(".post-like-count-for-" + postId + " .like-count");
+      const currentLikeCount = parseInt(likeCountElement.text());
 
+      if (likeButton.hasClass("liked")) {
+        likeCountElement.text(currentLikeCount + 1);
+        const csrfToken = $("[name=csrfmiddlewaretoken]").val(); // Get CSRF token
+        $.ajax({
+            type: "POST",
+            url: `like/${postId}`, // Replace with your actual endpoint
+            data: { postId: postId, csrfmiddlewaretoken: csrfToken }, // Include CSRF token
+            success: function (data) {
+            console.log("Like updated successfully for post ID:", postId);
+            },
+            error: function (error) {
+            console.error("Error updating like:", error);
+            },
+      });
+      } else {
+        likeCountElement.text(currentLikeCount - 1);
+        const csrfToken = $("[name=csrfmiddlewaretoken]").val(); // Get CSRF token
+        $.ajax({
+            type: "POST",
+            url: `dislike/${postId}`, // Replace with your actual endpoint
+            data: { postId: postId, csrfmiddlewaretoken: csrfToken }, // Include CSRF token
+            success: function (data) {
+            console.log("Dislike updated successfully for post ID:", postId);
+            },
+            error: function (error) {
+            console.error("Error updating like:", error);
+            },
+      });
+    }
+    });
+  });
+  </script>
+<script>
+    // Function to open the modal
+function openModal() {
+  document.getElementById("myModal").style.display = "block";
+  
+}
+
+// Function to close the modal
+function closeModal() {
+  document.getElementById("myModal").style.display = "none";
+  
+}
+
+
+// Event listener for the "Share" button
+
+
+</script>
+<script>
+    const posts=[...document.querySelectorAll('[id^="post-"]')]
+
+    gsap.from(posts, {
+        opacity:0,
+        y:50,
+        duration:1,
+        stagger:0.2,
+        delay:0.2,
+        ease:'power3.out'
+    })
+    gsap.to()
+    gsap.fromTo()
+
+</script>
 <script>
     const text=[...document.querySelectorAll('[id^="text-"]')]
     gsap.from(text, {
@@ -955,8 +1066,12 @@
     })
     gsap.to()
     gsap.fromTo()
+    
+
 
 </script>
+
+  
 <script>
     $(document).ready(function() {
         $(".follow-button, .unfollow-button").on("click", function(e) {
@@ -977,14 +1092,14 @@
                 data: { user_id: userId, csrfmiddlewaretoken: csrfToken }, // Include the CSRF token in the data
                 headers: { "X-CSRFToken": csrfToken }, // Include the CSRF token in the headers
                 success: function(response) {
-                    console.log(response);
+                    
                     if (response.success) {
-                        console.log("it worked!!!!!!!!")
+                        
                         if (action === "follow")
                         {
                         button.text("Unfollow");
                         button.removeClass("follow-button").addClass("unfollow-button");
-                        b
+                        
                         } 
                         else if (action === "unfollow") 
                         {
