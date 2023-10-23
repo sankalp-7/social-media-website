@@ -40,25 +40,31 @@ class Post(models.Model):
 	posted = models.DateTimeField(auto_now_add=True)
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	likes = models.IntegerField(default=0)
-
-
 	def get_absolute_url(self):
 		return reverse('postdetails', args=[str(self.id)])
-
 	def __str__(self):
 		return str(self.id)
+
+class LikeLogs(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ['user', 'post']
 
 
 class Follow(models.Model):
 	follower = models.ForeignKey(User,on_delete=models.CASCADE, null=True, related_name='follower')
 	following = models.ForeignKey(User,on_delete=models.CASCADE, null=True, related_name='following')
-	
+
+
 @receiver(post_save, sender=Follow)
 def add_followed_posts_to_stream(sender, instance, created, **kwargs):
 	if created:
 		follower = instance.follower
 		following = instance.following
 		followed_posts = Post.objects.filter(user=following)
+			
 		for post in followed_posts:
 			Stream.objects.create(
 				post=post,
@@ -86,6 +92,7 @@ class Stream(models.Model):
             stream=Stream.objects.create(post=post,user=follower.follower,following=user,date=post.posted)
             stream.save()
             notify.send(user, recipient=follower.follower, verb='Post Notification', description='Just Posted!')
+	    
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -96,7 +103,7 @@ class Comment(models.Model):
 
 
 post_save.connect(Stream.add_post, sender=Post)
-# post_save.connect(Stream.add_post, sender=Follow)
+
 
 
 
