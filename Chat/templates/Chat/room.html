@@ -162,6 +162,7 @@ body {
     width: 31px;
     border-radius: 39px;
     height: 29px;
+    align-content: center;
     
 }
 .total-msg-div{
@@ -245,7 +246,7 @@ body {
                 imgElement.width = '10px';
                 imgElement.classList.add('user-profile-img');
 
-        
+              
                 const msgDiv = document.createElement('div');
                 msgDiv.classList.add('msg-div');
                 msgDiv.innerHTML = '<b>' + data.username + '</b>: ' + data.message;
