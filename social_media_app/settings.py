@@ -101,9 +101,9 @@ CHANNEL_LAYERS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'djinsta',
-        'USER': 'root',
-        'PASSWORD': 'lq11pnwifi',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
         'HOST': 'db',
         'PORT': 3306
     }
