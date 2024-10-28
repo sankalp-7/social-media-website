@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   app:
-    build: dockerfile
+    build: .
     volumes:
       - .:/djinsta
       
