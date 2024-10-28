@@ -13,7 +13,7 @@ services:
       - REDIS_HOST=redis
       - DB_NAME=djinsta
       - DB_USER=root
-      - DB_PASSWORD=''
+      - DB_PASSWORD=password
       - DB_PORT=3307
       - DB_HOST=db
     depends_on:
@@ -22,8 +22,8 @@ services:
   db:
     image: mysql:5.7
     environment:
-      MYSQL_ROOT_PASSWORD: ''
-      MYSQL_DATABASE: ''
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: djinsta
     ports:
       - 3307:3306
     volumes:
